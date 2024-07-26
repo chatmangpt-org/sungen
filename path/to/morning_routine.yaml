@@ -1,0 +1,27 @@
+morning_routine:
+  start_event:
+    id: StartEvent_1
+    name: Wake Up
+  tasks:
+    - id: Task_1
+      name: Brush Teeth
+    - id: Task_2
+      name: Take Shower
+    - id: Task_3
+      name: Have Breakfast
+  end_event:
+    id: EndEvent_1
+    name: Ready for the Day
+  sequence_flows:
+    - id: Flow_1
+      source_ref: StartEvent_1
+      target_ref: Task_1
+    - id: Flow_2
+      source_ref: Task_1
+      target_ref: Task_2
+    - id: Flow_3
+      source_ref: Task_2
+      target_ref: Task_3
+    - id: Flow_4
+      source_ref: Task_3
+      target_ref: EndEvent_1
