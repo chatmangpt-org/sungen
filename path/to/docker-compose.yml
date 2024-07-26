@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  bpmn-engine:
+    image: camunda/camunda-bpm-platform:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - CAMUNDA_JDBC_URL=jdbc:h2:mem:camunda;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      - CAMUNDA_JDBC_DRIVER=org.h2.Driver
+      - CAMUNDA_JDBC_USERNAME=sa
+      - CAMUNDA_JDBC_PASSWORD=
+    volumes:
+      - ./bpmn:/camunda/wildfly/standalone/deployments
