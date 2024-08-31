@@ -83,7 +83,7 @@ class GenPydanticInstance(dspy.Module):
         # Concatenate source code of models for use in generation/correction logic
         self.model_sources = get_model_source(model)
 
-        # Initialize DSPy ChainOfThought modules for generation and correction
+        # Initialize DSPy ChainOfThought dspy_modules for generation and correction
         self.generate = ChainOfThought(generate_sig)
         self.correct_generate = ChainOfThought(correct_generate_sig)
         self.validation_error = None
@@ -162,7 +162,7 @@ class GenPydanticDict(dspy.Module):
         # Concatenate source code of models for use in generation/correction logic
         self.model_sources = get_model_source(model)
 
-        # Initialize DSPy ChainOfThought modules for generation and correction
+        # Initialize DSPy ChainOfThought dspy_modules for generation and correction
         self.generate = ChainOfThought(generate_sig)
         self.correct_generate = ChainOfThought(correct_generate_sig)
         self.validation_error = None

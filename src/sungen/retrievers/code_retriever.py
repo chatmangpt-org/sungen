@@ -96,7 +96,7 @@ def main():
     print(result.passages)
 
     for file_content in result.passages:
-        #from sungen.modules.nuxt_module import nuxt_call
+        #from sungen.dspy_modules.nuxt_module import nuxt_call
         print(file_content)
         #nuxt = nuxt_call(path=path, readme=file_content)
         #print(nuxt)
