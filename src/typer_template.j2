@@ -1,0 +1,8 @@
+{% for path, path_item in openapi.paths.items() %}
+Path: {{ path }}
+    {% for method, operation in path_item.items() %}
+    Method: {{ method.upper() }}
+        Operation ID: {{ operation.operationId | default('No Operation ID') }}
+        Summary: {{ operation.summary | default('No Summary Provided') }}
+    {% endfor %}
+{% endfor %}

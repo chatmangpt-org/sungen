@@ -15,9 +15,9 @@ app = typer.Typer()
 
 
 @app.command(name="{{ new_command_name }}")
-def {{ sub_command_name }}_{{ new_command_name }}():
+def {{ sub_command_name }}_{{ new_command_name | underscore }}():
     """{{ new_command_name }}"""
-    typer.echo("Running {{ new_command_name }} subcommand.")
+    typer.echo("Running {{ new_command_name | underscore }} subcommand.")
     
 '''
 
@@ -26,10 +26,10 @@ def {{ sub_command_name }}_{{ new_command_name }}():
 @app.command(
     name="new",
 )
-def module(subcommand_name: str, new_command_name: str):
+def new_command(subcommand_name: str, new_command_name: str):
     """
     Generate a new subcommand module with the given name.
-    Example usage: dspygen command new new_command
+    Example usage: sungen command new new_command
     """
     script_dir = Path(__file__).parent
 
@@ -53,9 +53,9 @@ def module(subcommand_name: str, new_command_name: str):
 
 add_template = ''' 
 @app.command(name="{{ new_command_name }}")
-def {{ sub_command_name }}_{{ new_command_name }}():
+def {{ sub_command_name }}_{{ new_command_name | underscore }}():
     """{{ new_command_name }}"""
-    typer.echo("Running {{ new_command_name }} subcommand.")
+    typer.echo("Running {{ new_command_name | underscore }} subcommand.")
 
 '''
 
@@ -64,7 +64,7 @@ def {{ sub_command_name }}_{{ new_command_name }}():
 def add_command(sub_command_name: str, new_command_name: str):
     """
     Add a new command to an existing subcommand module.
-    Example usage: dspygen command add existing_command new_command
+    Example usage: sungen command add existing_command new_command
     """
     script_dir = Path(__file__).parent
 
@@ -91,3 +91,23 @@ def add_command(sub_command_name: str, new_command_name: str):
     typer.echo(
         f"New command '{new_command_name}' added to subcommand module '{sub_command_name}' successfully!"
     )
+
+@app.command(name="bulk-new")
+def bulk_new(
+    base_command: str = typer.Option(..., "--base", "-b", help="Base command name for all new subcommands"),
+    subcommands: str = typer.Option(..., "--subcommands", "-s", help="Comma-separated list of subcommand names to create")
+):
+    """
+    Create multiple new subcommand modules at once.
+    Example usage: sungen command bulk-new -b base_command -s subcommand1,subcommand2
+    """
+    subcommand_list = subcommands.split(",")  # Split the comma-separated string into a list
+
+    # Create the base command first
+    new_command(base_command, base_command)
+
+    # Add each subcommand to the base command module
+    for subcommand in subcommand_list:
+        add_command(base_command, subcommand.strip())  # Use strip() to remove any extra whitespace
+
+    typer.echo(f"Bulk creation of {len(subcommand_list)} subcommand modules completed successfully!")

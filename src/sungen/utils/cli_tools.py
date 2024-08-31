@@ -1,6 +1,7 @@
 import os
 from importlib import import_module
 from pathlib import Path
+from github import Github
 
 import dspy
 import typer
@@ -49,7 +50,6 @@ def chatbot(question, context, history=""):
 
 
 def load_commands(app, cmd_dir: Path):
-    print()
     for filename in os.listdir(cmd_dir):
         if filename.endswith("_cmd.py"):
             module_path = str(cmd_dir.absolute()).split("src/")[1].replace("/", ".")
@@ -57,3 +57,18 @@ def load_commands(app, cmd_dir: Path):
             module = import_module(module_name)
             if hasattr(module, "app"):
                 app.add_typer(module.app, name=filename[:-7], help=module.__doc__)
+
+
+import typer
+import os
+
+app = typer.Typer()
+
+
+# Dependency injection for creating a GitHub instance
+def get_github_instance(token: str = typer.Option(None, envvar="GITHUB_TOKEN")) -> Github:
+    if not token:
+        typer.echo("Error: No GitHub token provided and $GITHUB_TOKEN is not set.", err=True)
+        raise typer.Exit(code=1)
+
+    return Github(token)
