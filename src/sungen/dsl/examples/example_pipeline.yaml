@@ -1,0 +1,29 @@
+lm_models:
+  - label: "default"
+    name: "OpenAI"
+
+signatures:
+  - name: "GenerateGherkinSignature"
+    docstring: "Generates a comprehensive gherkin from structured data."
+    inputs:
+      - name: "processed_data"
+        desc: "Structured data to be included in the gherkin."
+    outputs:
+      - name: "gherkin"
+        desc: "The final gherkin generated from the structured data."
+
+lm_modules:
+  - name: "GherkinGeneratorModule"
+    signature: "GenerateGherkinSignature"
+    predictor: "ChainOfThought"
+    args:
+      - name: "gherkin_scenarios"
+        value: "StandardGherkinTemplate"
+
+steps:
+  - file: "feature_list.yaml"
+
+  - module: "GherkinGeneratorModule"
+    lm_model: "fast"
+    args:
+      processed_data: "{{ processed_data }}"

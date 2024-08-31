@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]  # https://python-poetry.org/docs/pyproject/
 name = "sungen"
-version = "2024.7.4.2"
+version = "2024.8.30"
 description = "TODO"
 authors = ["Sean Chatman <info@chatmangpt.com>"]
 readme = "README.md"
@@ -39,6 +39,12 @@ inject = "^5.2.1"
 asyncer = "^0.0.7"
 pygithub = "^2.3.0"
 speechrecognition = "^3.10.4"
+pyperclip = "^1.9.0"
+pandasql = "^0.7.3"
+ebooklib = "^0.18"
+beautifulsoup4 = "^4.12.3"
+docx = "^0.2.4"
+pypdf = "^4.3.1"
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 coverage = { extras = ["toml"], version = ">=7.4.4" }

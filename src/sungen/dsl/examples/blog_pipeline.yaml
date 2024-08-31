@@ -1,0 +1,4 @@
+steps:
+  - module: "sungen.modules.blog_module.BlogModule"
+    args:
+      subject: "{{ subject }}"

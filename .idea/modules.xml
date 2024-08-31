@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../dspygen/.idea/dspygen.iml" filepath="$PROJECT_DIR$/../dspygen/.idea/dspygen.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/stargen.iml" filepath="$PROJECT_DIR$/.idea/stargen.iml" />
     </modules>
   </component>
