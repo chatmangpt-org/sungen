@@ -22,7 +22,7 @@ def {{ sub_command_name }}_{{ new_command_name | underscore }}():
 '''
 
 
-# Define the subcommand to generate subcommand modules
+# Define the subcommand to generate subcommand dspy_modules
 @app.command(
     name="new",
 )
@@ -98,7 +98,7 @@ def bulk_new(
     subcommands: str = typer.Option(..., "--subcommands", "-s", help="Comma-separated list of subcommand names to create")
 ):
     """
-    Create multiple new subcommand modules at once.
+    Create multiple new subcommand dspy_modules at once.
     Example usage: sungen command bulk-new -b base_command -s subcommand1,subcommand2
     """
     subcommand_list = subcommands.split(",")  # Split the comma-separated string into a list
@@ -110,4 +110,4 @@ def bulk_new(
     for subcommand in subcommand_list:
         add_command(base_command, subcommand.strip())  # Use strip() to remove any extra whitespace
 
-    typer.echo(f"Bulk creation of {len(subcommand_list)} subcommand modules completed successfully!")
+    typer.echo(f"Bulk creation of {len(subcommand_list)} subcommand dspy_modules completed successfully!")
