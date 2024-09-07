@@ -1,8 +1,22 @@
-[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/to/do)
+It appears that `sungen` is a utility package derived from `dspygen`, but it does not have a direct command for generating modules like `dspygen module`. Instead, it offers several other commands such as `api`, `cmd`, `deploy`, and others for managing different tasks.
+
+### Updated README for `sungen`
+
+Here's an updated README for `sungen` based on the provided directory structure and the available commands:
+
+---
 
 # sungen
 
-TODO
+**sungen** is a utility package extracted from `dspygen` that provides a suite of tools and utilities for AI development, project management, and workflow automation. `sungen` offers a set of command-line tools to streamline the development process, automate repetitive tasks, and enhance productivity in managing AI projects.
+
+## Features
+
+- **Command-Line Interface (CLI)**: Simplifies interaction with various tools via a user-friendly CLI.
+- **Workflow Automation**: Supports BPMN (Business Process Model and Notation) and YAML workflows.
+- **Code Generation and Management**: Provides tools to generate, optimize, and deploy code and manage projects.
+- **Project Initialization**: Offers commands to quickly initialize and configure new projects.
+- **Integrated Development Environment (IDE) Support**: Seamlessly integrates with Docker, VS Code, and other tools for development.
 
 ## Installing
 
@@ -20,16 +34,37 @@ To view the CLI help information, run:
 sungen --help
 ```
 
+## Available Commands
+
+`sungen` offers several commands, each serving a specific purpose:
+
+- **`init`**: Initialize a new `sungen` project.
+- **`cmd`**: Generate new subcommands or add to existing ones.
+- **`api`**: Handle API-related tasks.
+- **`deploy`**: Deploy projects or services.
+- **`fgn`**: Handle foreign tasks or integrations.
+- **`inhabitant`**: Manage inhabitants or entities within the system.
+- **`issue`**: Manage issues or tasks.
+- **`marketplace`**: Interact with the marketplace for plugins or extensions.
+- **`optimize`**: Optimize code, workflows, or configurations.
+- **`pln`**: Plan and manage project tasks.
+- **`pr`**: Manage pull requests.
+- **`project`**: Manage project settings or configurations.
+- **`proposal`**: Manage project proposals or requests.
+- **`repo`**: Handle repository tasks.
+- **`support`**: Provide support-related commands.
+- **`ticket`**: Manage tickets or support requests.
+
 ## Contributing
+
+We welcome contributions to **sungen**! To set up your development environment, follow these steps:
 
 <details>
 <summary>Prerequisites</summary>
 
-<details>
-<summary>1. Set up Git to use SSH</summary>
-
-1. [Generate an SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key) and [add the SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
-1. Configure SSH to automatically load your SSH keys:
+1. **Set up Git to use SSH**
+   - [Generate an SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key) and [add the SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
+   - Configure SSH to automatically load your SSH keys:
     ```sh
     cat << EOF >> ~/.ssh/config
     
@@ -41,52 +76,44 @@ sungen --help
     EOF
     ```
 
-</details>
+2. **Install Docker**
+   - [Install Docker Desktop](https://www.docker.com/get-started).
+   - _Linux only_: Export your user ID and group ID:
+    ```sh
+    cat << EOF >> ~/.bashrc
+    
+    export UID=$(id --user)
+    export GID=$(id --group)
+    EOF
+    ```
 
-<details>
-<summary>2. Install Docker</summary>
-
-1. [Install Docker Desktop](https://www.docker.com/get-started).
-    - _Linux only_:
-        - Export your user's user id and group id so that [files created in the Dev Container are owned by your user](https://github.com/moby/moby/issues/3206):
-            ```sh
-            cat << EOF >> ~/.bashrc
-            
-            export UID=$(id --user)
-            export GID=$(id --group)
-            EOF
-            ```
-
-</details>
-
-<details>
-<summary>3. Install VS Code or PyCharm</summary>
-
-1. [Install VS Code](https://code.visualstudio.com/) and [VS Code's Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers). Alternatively, install [PyCharm](https://www.jetbrains.com/pycharm/download/).
-2. _Optional:_ install a [Nerd Font](https://www.nerdfonts.com/font-downloads) such as [FiraCode Nerd Font](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode) and [configure VS Code](https://github.com/tonsky/FiraCode/wiki/VS-Code-Instructions) or [configure PyCharm](https://github.com/tonsky/FiraCode/wiki/Intellij-products-instructions) to use it.
-
-</details>
+3. **Install VS Code or PyCharm**
+   - [Install VS Code](https://code.visualstudio.com/) and [VS Code's Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers), or [install PyCharm](https://www.jetbrains.com/pycharm/download).
 
 </details>
 
 <details open>
 <summary>Development environments</summary>
 
-The following development environments are supported:
+You can develop using the following environments:
 
-1. ⭐️ _GitHub Codespaces_: click on _Code_ and select _Create codespace_ to start a Dev Container with [GitHub Codespaces](https://github.com/features/codespaces).
-1. ⭐️ _Dev Container (with container volume)_: click on [Open in Dev Containers](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/to/do) to clone this repository in a container volume and create a Dev Container with VS Code.
-1. _Dev Container_: clone this repository, open it with VS Code, and run <kbd>Ctrl/⌘</kbd> + <kbd>⇧</kbd> + <kbd>P</kbd> → _Dev Containers: Reopen in Container_.
-1. _PyCharm_: clone this repository, open it with PyCharm, and [configure Docker Compose as a remote interpreter](https://www.jetbrains.com/help/pycharm/using-docker-compose-as-a-remote-interpreter.html#docker-compose-remote) with the `dev` service.
-1. _Terminal_: clone this repository, open it with your terminal, and run `docker compose up --detach dev` to start a Dev Container in the background, and then run `docker compose exec dev zsh` to open a shell prompt in the Dev Container.
+1. **GitHub Codespaces**: Start a Dev Container with [GitHub Codespaces](https://github.com/features/codespaces).
+2. **Dev Container (with container volume)**: Clone this repository into a container volume using VS Code.
+3. **VS Code**: Open the repository with VS Code and use the _Dev Containers: Reopen in Container_ command.
+4. **PyCharm**: Use Docker Compose as a remote interpreter.
+5. **Terminal**: Use Docker Compose commands to manage development environments.
 
 </details>
 
 <details>
 <summary>Developing</summary>
 
-- Run `poe` from within the development environment to print a list of [Poe the Poet](https://github.com/nat-n/poethepoet) tasks available to run on this project.
-- Run `poetry add {package}` from within the development environment to install a run time dependency and add it to `pyproject.toml` and `poetry.lock`. Add `--group test` or `--group dev` to install a CI or development dependency, respectively.
-- Run `poetry update` from within the development environment to upgrade all dependencies to the latest versions allowed by `pyproject.toml`.
+- **`poe`**: Run `poe` within the development environment to list available tasks.
+- **`poetry add {package}`**: Install runtime dependencies.
+- **`poetry update`**: Upgrade all dependencies to the latest versions.
 
 </details>
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.

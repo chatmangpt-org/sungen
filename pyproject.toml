@@ -4,11 +4,11 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]  # https://python-poetry.org/docs/pyproject/
 name = "sungen"
-version = "2024.8.31"
+version = "2024.9.7.2"
 description = "TODO"
 authors = ["Sean Chatman <info@chatmangpt.com>"]
 readme = "README.md"
-repository = "https://github.com/to/do"
+repository = "https://github.com/seanchatmangpt/sungen"
 
 [tool.poetry.scripts]  # https://python-poetry.org/docs/pyproject/#scripts
 sungen = "sungen.cli:app"
