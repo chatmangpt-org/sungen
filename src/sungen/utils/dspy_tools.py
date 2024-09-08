@@ -1,7 +1,10 @@
 import dspy
 
 
-def init_dspy(model: str = "gpt-4o-mini",
+GPT_DEFAULT_MODEL = "gpt-4o-mini"
+
+
+def init_dspy(model: str = GPT_DEFAULT_MODEL,
               lm_class=dspy.OpenAI,
               max_tokens: int = 800,
               lm_instance=None,

@@ -1,7 +1,7 @@
 import typer
 
 from sungen.dsl.dsl_pipeline_executor import execute_pipeline
-from sungen.utils.cli_tools import chatbot
+from sungen.utils.chat_tools import chatbot
 
 app = typer.Typer(help="Language Pipeline Domain Specific Language commands for sungen.")
 

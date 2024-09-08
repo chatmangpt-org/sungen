@@ -1,3 +1,7 @@
+from sungen.utils.chat_tools import handle_global_error, set_global_exception_handler
+
+set_global_exception_handler()
+
 import json
 import subprocess
 import sys
@@ -6,39 +10,17 @@ from importlib import metadata
 import typer
 from munch import Munch
 from rich import print
-from sungen.utils.cli_tools import load_commands
-from sungen.utils.file_tools import source_dir
+from sungen.utils.cli_tools import load_commands, source_dir
 import os
 
 from sungen.utils.plugin_tools import load_plugins
 
+
 app = typer.Typer()
 
+# Remove safe imports and exception handling for loading commands and plugins
 load_commands(app, source_dir("cmds"))
 load_plugins(app)
-
-
-def package_installed(package_name, min_version):
-    try:
-        version = metadata.version(package_name)
-        return version >= min_version
-    except metadata.PackageNotFoundError:
-        return False
-
-
-def check_or_install_packages():
-    packages_requirements = {
-        "cruft": "2.12.0",
-        "cookiecutter": "2.1.1",
-    }
-
-    for package, min_version in packages_requirements.items():
-        if not package_installed(package, min_version):
-            print(f"{package} not found or version is below {min_version}. Installing/upgrading...")
-            subprocess.check_call([sys.executable, "-m", "pip", "install", f"{package}>={min_version}"])
-        # else:
-        #     print(f"{package} meets the version requirement.")
-
 
 @app.command()
 def init(project_name: str = typer.Argument(...),
@@ -142,7 +124,12 @@ def init(project_name: str = typer.Argument(...),
 
 def main():
     """Main function"""
-
+    try:
+        app()
+    except Exception as e:
+        print(f"An unexpected error occurred: {str(e)}")
+        handle_global_error(type(e), e, sys.exc_info()[2])
+        sys.exit(1)
 
 if __name__ == '__main__':
     main()

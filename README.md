@@ -1,11 +1,3 @@
-It appears that `sungen` is a utility package derived from `dspygen`, but it does not have a direct command for generating modules like `dspygen module`. Instead, it offers several other commands such as `api`, `cmd`, `deploy`, and others for managing different tasks.
-
-### Updated README for `sungen`
-
-Here's an updated README for `sungen` based on the provided directory structure and the available commands:
-
----
-
 # sungen
 
 **sungen** is a utility package extracted from `dspygen` that provides a suite of tools and utilities for AI development, project management, and workflow automation. `sungen` offers a set of command-line tools to streamline the development process, automate repetitive tasks, and enhance productivity in managing AI projects.
