@@ -1,0 +1,49 @@
+name: "marketplace"
+short_name: "mrkt"
+version: "1.0.0"
+description: >
+  The Marketplace Plugin enables seamless integration with the Sungen marketplace, allowing users to search, install, and manage plugins from a centralized repository.
+author: "Sungen Team"
+source: "https://github.com/sungen/mrkt-plugin"
+license: "MIT"
+tags:
+  - "marketplace"
+  - "plugin-management"
+  - "sungen"
+
+settings:
+  default_marketplace: "https://marketplace.sungen.com"
+  cache_timeout: 300
+  auto_update_check: true
+  log_level: "INFO"
+  retry_count: 3
+  connection_timeout: 30
+  backup_before_update: true
+
+dependencies:
+  - plugin: "core-plugin"
+    version: ">=1.0.0"
+  - plugin: "auth-plugin"
+    version: ">=1.0.0"
+
+compatibility:
+  min_sungen_version: "1.0.0"
+  max_sungen_version: "2.0.0"
+
+marketplace:
+  featured: true
+  category: "Utilities"
+  keywords:
+    - "plugin"
+    - "marketplace"
+    - "utilities"
+
+support:
+  documentation_url: "https://docs.sungen.com/mrkt-plugin"
+  issues_url: "https://github.com/sungen/mrkt-plugin/issues"
+  contact_email: "support@sungen.com"
+
+advanced:
+  parallel_install: true
+  secure_downloads: true
+  sandbox_mode: false

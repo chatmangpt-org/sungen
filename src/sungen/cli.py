@@ -10,9 +10,12 @@ from sungen.utils.cli_tools import load_commands
 from sungen.utils.file_tools import source_dir
 import os
 
+from sungen.utils.plugin_tools import load_plugins
+
 app = typer.Typer()
 
 load_commands(app, source_dir("cmds"))
+load_plugins(app)
 
 
 def package_installed(package_name, min_version):

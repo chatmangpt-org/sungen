@@ -1,0 +1,41 @@
+name: "Aider Plugin"
+short_name: "aider"
+version: "1.1.0"
+description: >
+  The Aider Plugin provides AI-assisted coding features such as generating scripts, refactoring code, and more, directly from the Sungen CLI.
+author: "Sungen Team"
+source: "https://github.com/sungen/aider-plugin"
+license: "MIT"
+tags:
+  - "AI"
+  - "automation"
+  - "coding-assistance"
+  - "sungen"
+settings:
+  default_model: "gpt-4-turbo"
+  auto_update_check: true
+  lint_on_commit: true
+  cache_timeout: 300
+  retry_count: 3
+  connection_timeout: 30
+dependencies:
+  - plugin: "core-plugin"
+    version: ">=1.0.0"
+compatibility:
+  min_sungen_version: "1.0.0"
+  max_sungen_version: "2.0.0"
+marketplace:
+  featured: true
+  category: "AI Tools"
+  keywords:
+    - "AI"
+    - "code-generation"
+    - "automation"
+support:
+  documentation_url: "https://docs.sungen.com/aider-plugin"
+  issues_url: "https://github.com/sungen/aider-plugin/issues"
+  contact_email: "support@sungen.com"
+advanced:
+  parallel_install: true
+  secure_downloads: true
+  sandbox_mode: false

@@ -49,20 +49,29 @@ def chatbot(question, context, history=""):
     return history
 
 
-def load_commands(app, cmd_dir: Path):
-    for filename in os.listdir(cmd_dir):
-        if filename.endswith("_cmd.py"):
-            module_path = str(cmd_dir.absolute()).split("src/")[1].replace("/", ".")
-            module_name = f'{module_path}.{filename[:-3]}'
+def load_commands(app, cmd_dir):
+    # Convert cmd_dir to Path if it's a string
+    cmd_dir = Path(cmd_dir) if isinstance(cmd_dir, str) else cmd_dir
+
+    # Get the base module path relative to the package
+    try:
+        # Find the relative module path from the current package
+        package_path = cmd_dir.resolve()
+        module_base = ".".join(package_path.parts[-2:])  # Assumes cmds/ is a subdirectory of the package
+    except IndexError:
+        raise ValueError(f"The path '{cmd_dir}' does not appear to be within an importable package structure.")
+
+    # Iterate over Python files in the command directory
+    for filepath in cmd_dir.glob("*_cmd.py"):
+        # Construct the full module name for import
+        module_name = f"{module_base}.{filepath.stem}"
+        try:
             module = import_module(module_name)
             if hasattr(module, "app"):
-                app.add_typer(module.app, name=filename[:-7], help=module.__doc__)
-
-
-import typer
-import os
-
-app = typer.Typer()
+                # Add the module's app to the main app
+                app.add_typer(module.app, name=filepath.stem[:-4], help=module.__doc__)
+        except Exception as e:
+            raise ValueError(f"Failed to load module '{module_name}'")
 
 
 # Dependency injection for creating a GitHub instance
