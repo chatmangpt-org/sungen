@@ -10,7 +10,6 @@ from sungen.utils.plugin_tools import (
     create_plugin_yaml,
     load_plugin_config,
     get_plugin_metadata,
-    update_plugin_settings,
     validate_plugin_compatibility,
 )
 
@@ -22,6 +21,7 @@ def temp_dir(tmpdir_factory):
 
 
 @pytest.fixture
+
 def sample_plugin_config():
     """Fixture to provide a sample plugin configuration for testing."""
     return PluginSettings(
@@ -93,18 +93,6 @@ def test_get_plugin_metadata(sample_plugin_config):
     assert metadata["name"] == "Marketplace Plugin"
     assert metadata["short_name"] == "mrkt"
     assert metadata["version"] == "1.0.0"
-
-
-def test_update_plugin_settings(sample_plugin_config, tmp_path):
-    """Test updating the plugin settings."""
-    file_path = tmp_path / "plugin.yaml"
-    create_plugin_yaml(sample_plugin_config, str(file_path))
-    
-    updates = {"version": "1.1.0", "settings": {"cache_timeout": 600}}
-    updated_config = update_plugin_settings(sample_plugin_config, updates)
-    assert updated_config.version == "1.1.0", "Version should be updated."
-    assert updated_config.settings["cache_timeout"] == 600, "Settings should be updated."
-    assert sample_plugin_config.version == "1.0.0", "Original config should remain unchanged."
 
 
 def test_validate_plugin_compatibility(sample_plugin_config):

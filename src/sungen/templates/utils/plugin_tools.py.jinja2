@@ -1,0 +1,40 @@
+"""Plugin tools for {{ project_name }}."""
+
+import os
+import yaml
+from pathlib import Path
+
+def load_plugin_config(plugin_dir: str) -> dict:
+    """
+    Load the plugin configuration from the plugin.yaml file.
+    
+    Args:
+        plugin_dir (str): The directory containing the plugin.yaml file.
+    
+    Returns:
+        dict: The plugin configuration.
+    """
+    config_path = Path(plugin_dir) / "plugin.yaml"
+    if not config_path.exists():
+        raise FileNotFoundError(f"Plugin configuration file not found: {config_path}")
+    
+    with open(config_path, 'r') as f:
+        return yaml.safe_load(f)
+
+def validate_plugin_structure(plugin_dir: str) -> bool:
+    """
+    Validate the structure of a plugin directory.
+    
+    Args:
+        plugin_dir (str): The directory to validate.
+    
+    Returns:
+        bool: True if the structure is valid, False otherwise.
+    """
+    required_files = ["plugin.yaml", "__init__.py"]
+    for file in required_files:
+        if not (Path(plugin_dir) / file).exists():
+            return False
+    return True
+
+# Add more plugin-related functions as needed

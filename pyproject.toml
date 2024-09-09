@@ -46,6 +46,8 @@ beautifulsoup4 = "^4.12.3"
 docx = "^0.2.4"
 pypdf = "^4.3.1"
 confz = "^2.0.1"
+pylint = "^3.2.7"
+icontract = "^2.6.6"
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 coverage = { extras = ["toml"], version = ">=7.4.4" }

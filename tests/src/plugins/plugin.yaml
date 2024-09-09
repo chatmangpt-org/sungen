@@ -2,25 +2,21 @@ advanced:
   parallel_install: true
   sandbox_mode: false
   secure_downloads: true
-author: Sungen Team
+author: Test Author
 compatibility:
   max_sungen_version: 2.0.0
   min_sungen_version: 1.0.0
 dependencies:
-- plugin: core-plugin
+- plugin: core
   version: '>=1.0.0'
-- plugin: auth-plugin
-  version: '>=1.0.0'
-description: The Marketplace Plugin enables seamless integration with the Sungen marketplace.
+description: Test Description
 license: MIT
 marketplace:
   category: Utilities
-  featured: true
+  featured: false
   keywords:
-  - plugin
-  - marketplace
-  - utilities
-name: Marketplace Plugin
+  - ''
+name: ''
 settings:
   auto_update_check: true
   backup_before_update: true
@@ -29,14 +25,12 @@ settings:
   default_marketplace: https://marketplace.sungen.com
   log_level: INFO
   retry_count: 3
-short_name: mrkt
-source: https://github.com/sungen/mrkt-plugin
+short_name: ''
+source: https://github.com/sungen/
 support:
   contact_email: support@sungen.com
-  documentation_url: https://docs.sungen.com/mrkt-plugin
-  issues_url: https://github.com/sungen/mrkt-plugin/issues
+  documentation_url: https://docs.sungen.com/
+  issues_url: https://github.com/sungen//issues
 tags:
-- marketplace
-- plugin-management
-- sungen
+- ''
 version: 1.0.0

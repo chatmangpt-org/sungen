@@ -1,0 +1,21 @@
+"""CLI tools for {{ project_name }}."""
+
+import subprocess
+import sys
+
+def check_or_install_packages() -> None:
+    """Check if required packages are installed, and install them if not."""
+    required_packages = [
+        "cruft",
+        "poetry",
+        # Add more required packages here
+    ]
+
+    for package in required_packages:
+        try:
+            __import__(package)
+        except ImportError:
+            print(f"{package} not found. Installing...")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# Add more CLI-related functions as needed

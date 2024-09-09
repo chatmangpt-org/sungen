@@ -5,7 +5,7 @@ from typing import Optional, Dict
 from github import Github
 import subprocess
 import yaml
-from sungen.utils.plugin_tools import load_plugin_config, validate_plugin_compatibility, update_plugin_settings
+from sungen.utils.plugin_tools import load_plugin_config, validate_plugin_compatibility
 import shutil
 import requests
 

@@ -1,0 +1,19 @@
+"""Tests for plugin commands in {{ project_name }}."""
+
+import pytest
+from typer.testing import CliRunner
+from {{ project_name }}.cmds.plugin_cmd import app
+
+runner = CliRunner()
+
+def test_create_plugin():
+    result = runner.invoke(app, ["create", "test_plugin"])
+    assert result.exit_code == 0
+    assert "Creating new plugin: test_plugin" in result.stdout
+
+def test_validate_plugin():
+    # You'll need to set up a temporary directory with a valid plugin structure for this test
+    with pytest.raises(FileNotFoundError):
+        runner.invoke(app, ["validate", "/non/existent/path"])
+
+# Add more tests for plugin commands as needed

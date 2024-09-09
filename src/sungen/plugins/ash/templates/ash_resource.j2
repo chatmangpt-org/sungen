@@ -1,0 +1,105 @@
+defmodule {{ resource.module }} do
+  use Ash.Resource,
+    data_layer: {{ resource.data_layer.name }}
+
+  {% if resource.description %}
+  @moduledoc """
+  {{ resource.description }}
+  """
+  {% endif %}
+
+  {% if resource.data_layer.options %}
+  {{ resource.data_layer.name }} do
+    {% for key, value in resource.data_layer.options.items() %}
+    {{ key }} {{ value }}
+    {% endfor %}
+  end
+  {% endif %}
+
+  attributes do
+    {% for attr in resource.attributes %}
+    attribute :{{ attr.name }}, {{ attr.type.value }}{% if attr.primary_key %}, primary_key: true{% endif %}{% if not attr.writable %}, writable: false{% endif %}{% if attr.default %}, default: {{ attr.default }}{% endif %}{% if attr.allow_nil == False %}, allow_nil?: false{% endif %}{% if attr.generated %}, generated?: true{% endif %}
+    {% endfor %}
+  end
+
+  actions do
+    {% for action in resource.actions %}
+    {{ action.type }} :{{ action.name }} do
+      {% if action.description %}
+      @doc """
+      {{ action.description }}
+      """
+      {% endif %}
+      {% for arg_name, arg_type in action.arguments.items() %}
+      argument :{{ arg_name }}, {{ arg_type }}
+      {% endfor %}
+      {% if action.returns %}
+      returns {{ action.returns }}
+      {% endif %}
+    end
+    {% endfor %}
+  end
+
+  {% if resource.calculations %}
+  calculations do
+    {% for calc in resource.calculations %}
+    calculate :{{ calc.name }}, {{ calc.type }} do
+      {% if calc.description %}
+      @doc """
+      {{ calc.description }}
+      """
+      {% endif %}
+      {% for arg_name, arg_type in calc.arguments.items() %}
+      argument :{{ arg_name }}, {{ arg_type }}
+      {% endfor %}
+      {% if calc.load %}
+      load {{ calc.load | join(", ") }}
+      {% endif %}
+      {% if calc.context %}
+      context {{ calc.context }}
+      {% endif %}
+    end
+    {% endfor %}
+  end
+  {% endif %}
+
+  {% if resource.aggregates %}
+  aggregates do
+    {% for agg in resource.aggregates %}
+    aggregate :{{ agg.name }}, {{ agg.type }}, :{{ agg.field }}{% if agg.description %}, doc: "{{ agg.description }}"{% endif %}
+    {% endfor %}
+  end
+  {% endif %}
+
+  {% if resource.relationships %}
+  relationships do
+    {% for rel in resource.relationships %}
+    {{ rel.type }} :{{ rel.name }}, {{ rel.destination }}{% if rel.source_field %}, source_field: :{{ rel.source_field }}{% endif %}{% if rel.destination_field %}, destination_field: :{{ rel.destination_field }}{% endif %}
+    {% endfor %}
+  end
+  {% endif %}
+
+  {% if resource.validations %}
+  validations do
+    {% for validation in resource.validations %}
+    validate :{{ validation.name }}, {{ validation.type }}{% if validation.options %}, {{ validation.options }}{% endif %}{% if validation.message %}, message: "{{ validation.message }}"{% endif %}
+    {% endfor %}
+  end
+  {% endif %}
+
+  {% if resource.changes %}
+  changes do
+    {% for change in resource.changes %}
+    change :{{ change.name }}, {{ change.type }}{% if change.options %}, {{ change.options }}{% endif %}
+    {% endfor %}
+  end
+  {% endif %}
+
+  {% if resource.identities %}
+  identities do
+    {% for identity in resource.identities %}
+    identity :{{ identity.name }}, [:{{ identity.keys | join(", :") }}]
+    {% endfor %}
+  end
+  {% endif %}
+end

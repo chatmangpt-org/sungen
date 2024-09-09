@@ -1,0 +1,29 @@
+"""Tests for plugin tools in {{ project_name }}."""
+
+import pytest
+from pathlib import Path
+from {{ project_name }}.utils.plugin_tools import load_plugin_config, validate_plugin_structure
+
+def test_load_plugin_config(tmp_path):
+    plugin_dir = tmp_path / "test_plugin"
+    plugin_dir.mkdir()
+    config_file = plugin_dir / "plugin.yaml"
+    config_file.write_text("name: TestPlugin\nversion: 1.0.0")
+
+    config = load_plugin_config(str(plugin_dir))
+    assert config == {"name": "TestPlugin", "version": "1.0.0"}
+
+def test_validate_plugin_structure(tmp_path):
+    valid_plugin_dir = tmp_path / "valid_plugin"
+    valid_plugin_dir.mkdir()
+    (valid_plugin_dir / "plugin.yaml").touch()
+    (valid_plugin_dir / "__init__.py").touch()
+
+    assert validate_plugin_structure(str(valid_plugin_dir)) is True
+
+    invalid_plugin_dir = tmp_path / "invalid_plugin"
+    invalid_plugin_dir.mkdir()
+
+    assert validate_plugin_structure(str(invalid_plugin_dir)) is False
+
+# Add more tests for plugin tools as needed

@@ -1,221 +1,196 @@
 import pytest
+from typer.testing import CliRunner
 from pathlib import Path
-import inflection
-from sungen.cmds.plugin_cmd import (
-    create_directory_structure,
-    render_template,
-    write_file,
-    generate_plugin_files,
-    plugin_py_template,
-)
-from sungen.utils.plugin_tools import PluginSettings, load_plugin_config
-from unittest.mock import patch, MagicMock
-from sungen.utils.chat_tools import handle_global_error
+
+from sungen.cmds.plugin_cmd import app
+from sungen.utils.str_tools import pythonic_str
+
+runner = CliRunner()
+
 
 @pytest.fixture
-def temp_plugin_dir(tmp_path):
-    """Fixture to create a temporary directory for plugin creation."""
+def temp_directory(tmp_path):
+    """Fixture for creating a temporary directory."""
     return tmp_path
 
+
 @pytest.fixture
-def mock_plugin_settings():
-    """Fixture to create a mock PluginSettings object."""
-    plugin_name = "TestPlugin"
-    pythonic_name = inflection.underscore(plugin_name)
-    return PluginSettings(
-        name=plugin_name,
-        short_name=pythonic_name[:3],
-        version="1.0.0",
-        description="A test plugin",
-        author="Test Author",
-        source=f"https://github.com/sungen/{pythonic_name}",
-        license="MIT",
-        tags=[pythonic_name],
-        settings={
-            "default_marketplace": "https://marketplace.sungen.com",
-            "cache_timeout": 300,
-            "auto_update_check": True,
-            "log_level": "INFO",
-            "retry_count": 3,
-            "connection_timeout": 30,
-            "backup_before_update": True,
-        },
-        dependencies=[],
-        compatibility={
-            "min_sungen_version": "1.0.0",
-            "max_sungen_version": "2.0.0"
-        },
-        marketplace={
-            "featured": False,
-            "category": "Utilities",
-            "keywords": [pythonic_name]
-        },
-        support={
-            "documentation_url": f"https://docs.sungen.com/{pythonic_name}",
-            "issues_url": f"https://github.com/sungen/{pythonic_name}/issues",
-            "contact_email": "support@sungen.com"
-        },
-        advanced={
-            "parallel_install": True,
-            "secure_downloads": True,
-            "sandbox_mode": False
-        }
+def plugin_name():
+    """Fixture for the name of the plugin."""
+    return pythonic_str("Sample Plugin")
+
+
+@pytest.fixture
+def plugin_description():
+    """Fixture for the description of the plugin."""
+    return "This is a sample plugin for testing purposes."
+
+
+@pytest.fixture
+def author_name():
+    """Fixture for the author of the plugin."""
+    return "Test Author"
+
+
+@pytest.fixture
+def version():
+    """Fixture for the version of the plugin."""
+    return "1.0.0"
+
+
+def test_create_plugin_command(temp_directory, plugin_name, plugin_description, author_name, version):
+    """Test the create_plugin command to ensure it generates the plugin files correctly."""
+    # Prepare the CLI command arguments
+    result = runner.invoke(
+        app,
+        [
+            "create",
+            "--plugin-name",
+            plugin_name,
+            "--description",
+            plugin_description,
+            "--author",
+            author_name,
+            "--version",
+            version,
+            "--license",  # Added license
+            "MIT",        # Default license
+            "--min-sungen-version",  # Added min_sungen_version
+            "1.0.0",      # Default min_sungen_version
+            "--max-sungen-version",  # Added max_sungen_version
+            "2.0.0",      # Default max_sungen_version
+            "--base-dir",
+            str(temp_directory)
+        ],
     )
 
-def test_create_directory_structure(temp_plugin_dir):
-    """Test creating the directory structure for a new plugin."""
-    plugin_name = "TestPlugin"
-    result = create_directory_structure(plugin_name, temp_plugin_dir)
-    expected_path = temp_plugin_dir / inflection.underscore(plugin_name)
-    assert result == expected_path
-    assert result.exists()
-    assert result.is_dir()
+    # Print the output for debugging
+    print(result.output)
 
-def test_render_template():
-    """Test rendering a template with Jinja2."""
-    template = "{{ name }} is {{ age }} years old."
-    context = {"name": "Alice", "age": 30}
-    result = render_template(template, **context)
-    assert result == "Alice is 30 years old."
+    # Check that the command completed successfully
+    assert result.exit_code == 0, f"Command failed with output: {result.output}"
 
-def test_write_file(tmp_path):
-    """Test writing content to a file."""
-    file_path = tmp_path / "test_file.txt"
-    content = "This is a test file."
-    write_file(file_path, content)
-    assert file_path.exists()
-    assert file_path.read_text() == content
+    # Check that the plugin files were created in the temporary directory
+    plugin_dir = temp_directory / Path(plugin_name.lower().replace(" ", "_"))  # Ensure consistent naming
+    print(f"Expected plugin directory: {plugin_dir}")  # Debugging output
 
-def test_generate_plugin_files(temp_plugin_dir, mock_plugin_settings):
-    """Test generating all necessary files for a new plugin."""
-    generate_plugin_files(mock_plugin_settings, temp_plugin_dir)
-    
-    pythonic_name = inflection.underscore(mock_plugin_settings.name)
-    plugin_dir = temp_plugin_dir / pythonic_name
-    assert plugin_dir.exists()
-    assert (plugin_dir / f"{pythonic_name}.py").exists()
-    assert (plugin_dir / f"{pythonic_name}.yaml").exists()
-    assert (plugin_dir / "__init__.py").exists()
+    plugin_yaml_path = plugin_dir / "plugin.yaml"
+    plugin_py_path = plugin_dir / f"{plugin_name.lower().replace(' ', '_')}_plugin.py"
+    init_py_path = plugin_dir / "__init__.py"
 
-def test_plugin_py_content(temp_plugin_dir, mock_plugin_settings):
-    """Test the content of the generated plugin Python file."""
-    generate_plugin_files(mock_plugin_settings, temp_plugin_dir)
-    
-    pythonic_name = inflection.underscore(mock_plugin_settings.name)
-    plugin_py_path = temp_plugin_dir / pythonic_name / f"{pythonic_name}.py"
-    content = plugin_py_path.read_text()
-    
-    assert mock_plugin_settings.name in content
-    assert mock_plugin_settings.description in content
-    assert mock_plugin_settings.author in content
-    assert mock_plugin_settings.version in content
-    assert "def example():" in content
-    assert "def register_plugin(parent_app: typer.Typer):" in content
+    # Check for the existence of the files
+    assert plugin_yaml_path.exists(), f"YAML file should be created at {plugin_yaml_path}."
+    assert plugin_py_path.exists(), f"Python file for the plugin should be created at {plugin_py_path}."
+    assert init_py_path.exists(), f"Empty __init__.py file should be created at {init_py_path}."
 
-def test_plugin_yaml_content(temp_plugin_dir, mock_plugin_settings):
-    """Test the content of the generated plugin YAML file."""
-    generate_plugin_files(mock_plugin_settings, temp_plugin_dir)
-    
-    pythonic_name = inflection.underscore(mock_plugin_settings.name)
-    plugin_yaml_path = temp_plugin_dir / pythonic_name / f"{pythonic_name}.yaml"
-    plugin_config = load_plugin_config(str(plugin_yaml_path))
-    
-    assert plugin_config.name == mock_plugin_settings.name
-    assert plugin_config.version == mock_plugin_settings.version
-    assert plugin_config.author == mock_plugin_settings.author
-    assert plugin_config.license == mock_plugin_settings.license
-    assert plugin_config.compatibility.min_sungen_version == mock_plugin_settings.compatibility["min_sungen_version"]
-    assert plugin_config.compatibility.max_sungen_version == mock_plugin_settings.compatibility["max_sungen_version"]
 
-def test_chat_command(monkeypatch):
-    """Test the chat command about plugin_cmd.py."""
-    with patch('sungen.cmds.plugin_cmd.chatbot') as mock_chatbot, \
-         patch('sungen.cmds.plugin_cmd.get_cli_help') as mock_get_cli_help, \
-         patch('sungen.utils.chat_tools.init_dspy') as mock_init_dspy, \
-         patch('sungen.utils.chat_tools.init_ol') as mock_init_ol:
-        mock_chatbot.return_value = "Mocked chat history"
-        mock_get_cli_help.return_value = "Mocked CLI help"
-        mock_init_dspy.return_value = MagicMock()
-        mock_init_ol.return_value = MagicMock()
-        
-        # Run the chat command with default model (gpt-4-turbo)
-        from sungen.cmds.plugin_cmd import chat
-        result = typer.run(chat, ["Tell me about plugin_cmd.py"])
-        
-        # Check that chatbot was called with the correct context and model
-        mock_chatbot.assert_called()
-        context_arg = mock_chatbot.call_args[1]['context']
-        assert "File: plugin_cmd.py" in context_arg
-        assert "CLI Commands:" in context_arg
-        assert "Mocked CLI help" in context_arg
-        assert "File Content:" in context_arg
-        assert "Chatbot Capabilities and Rules:" in context_arg
-        assert "Context Awareness:" in context_arg
-        assert "Code Generation:" in context_arg
-        assert mock_chatbot.call_args[1]['model'] == "gpt-4-turbo"
-        mock_init_dspy.assert_called_once()
-        mock_init_ol.assert_not_called()
+def test_plugin_yaml_content(temp_directory, plugin_name, plugin_description, author_name, version):
+    """Test the content of the created plugin YAML file."""
+    runner.invoke(
+        app,
+        [
+            "create",
+            "--plugin-name",
+            plugin_name,
+            "--description",
+            plugin_description,
+            "--author",
+            author_name,
+            "--version",
+            version,
+            "--base-dir",
+            str(temp_directory)
+        ],
+    )
 
-        # Reset mocks
-        mock_chatbot.reset_mock()
-        mock_init_dspy.reset_mock()
-        mock_init_ol.reset_mock()
+    # Check the contents of the plugin YAML file
+    plugin_dir = temp_directory / Path(plugin_name.lower().replace(" ", "_"))
+    plugin_yaml_path = plugin_dir / "plugin.yaml"
 
-        # Run the chat command with a non-GPT model
-        result = typer.run(chat, ["Tell me about plugin_cmd.py", "--model", "qwen2:instruct"])
-        
-        # Check that chatbot was called with the correct model
-        mock_chatbot.assert_called()
-        assert mock_chatbot.call_args[1]['model'] == "qwen2:instruct"
-        mock_init_dspy.assert_not_called()
-        mock_init_ol.assert_called_once()
+    with open(plugin_yaml_path) as f:
+        yaml_content = f.read()
 
-def test_get_cli_help():
-    """Test the get_cli_help function."""
-    mock_plugin_content = """
-import typer
+    assert "sample_plugin" in yaml_content, "YAML file should contain the plugin name."
+    assert "1.0.0" in yaml_content, "YAML file should contain the correct version."
+    assert f"{plugin_description}" in yaml_content, "YAML file should contain the plugin description."
+    assert f"{author_name}" in yaml_content, "YAML file should contain the author name."
 
-app = typer.Typer()
 
-@app.command()
-def hello():
-    '''Say hello'''
-    print("Hello, World!")
+def test_plugin_py_content(temp_directory, plugin_name, plugin_description, author_name, version):
+    """Test the content of the created plugin Python file."""
+    runner.invoke(
+        app,
+        [
+            "create",
+            "--plugin-name",
+            plugin_name,
+            "--description",
+            plugin_description,
+            "--author",
+            author_name,
+            "--version",
+            version,
+            "--base-dir",
+            str(temp_directory)
+        ],
+    )
 
-if __name__ == "__main__":
-    app()
-    """
-    
-    from sungen.cmds.plugin_cmd import get_cli_help
-    
-    help_output = get_cli_help(mock_plugin_content)
-    assert "Usage:" in help_output
-    assert "hello" in help_output
-    assert "Say hello" in help_output
+    # Check the contents of the plugin Python file
+    plugin_dir = temp_directory / Path(plugin_name.lower().replace(" ", "_"))
+    plugin_py_path = plugin_dir / f"{plugin_name.lower().replace(' ', '_')}_plugin.py"
 
-def test_handle_global_error():
-    """Test the global error handler."""
-    with patch('sungen.utils.chat_tools.init_dspy') as mock_init_dspy, \
-         patch('sungen.utils.chat_tools.dspy.ChainOfThought') as mock_chain_of_thought:
-        mock_init_dspy.return_value = MagicMock()
-        mock_analyzer = MagicMock()
-        mock_analyzer.return_value = MagicMock(
-            analysis="Mocked analysis",
-            fix_suggestions="Mocked fix suggestions",
-            architectural_insights="Mocked architectural insights"
-        )
-        mock_chain_of_thought.return_value = mock_analyzer
+    with open(plugin_py_path) as f:
+        py_content = f.read()
 
-        try:
-            raise ValueError("Test error")
-        except ValueError:
-            error_type, error_value, tb = sys.exc_info()
-            handle_global_error(error_type, error_value, tb)
+    assert plugin_name in py_content, "Python file should contain the plugin name."
+    assert plugin_description in py_content, "Python file should contain the plugin description."
+    assert author_name in py_content, "Python file should contain the author name."
 
-        mock_init_dspy.assert_called_once()
-        mock_chain_of_thought.assert_called_once()
-        mock_analyzer.assert_called_once()
 
-        # You might want to add more specific assertions here to check the output
+def test_create_plugin_directory_structure(temp_directory, plugin_name, plugin_description, author_name, version):
+    """Test that the create_plugin command creates the correct directory structure."""
+    runner.invoke(
+        app,
+        [
+            "create",
+            "--plugin-name",
+            plugin_name,
+            "--description",
+            plugin_description,
+            "--author",
+            author_name,
+            "--version",
+            version,
+            "--base-dir",
+            str(temp_directory)
+        ],
+    )
 
-# Add more tests as needed
+    # Check the directory structure
+    plugin_dir = temp_directory / Path(plugin_name.lower().replace(" ", "_"))
+    assert plugin_dir.exists(), "Plugin directory should be created."
+    assert (plugin_dir / "__init__.py").exists(), "__init__.py file should be present in the plugin directory."
+
+
+def test_create_plugin_invalid_args():
+    """Test create_plugin command with invalid arguments."""
+    result = runner.invoke(
+        app,
+        [
+            "create",
+            "--plugin-name",
+            "",  # Invalid: Empty plugin name
+            "--description",
+            "Test Description",
+            "--author",
+            "Test Author",
+            "--license",  # Added license
+            "MIT",        # Default license
+            "--min-sungen-version",  # Added min_sungen_version
+            "1.0.0",      # Default min_sungen_version
+            "--max-sungen-version",  # Added max_sungen_version
+            "2.0.0",      # Default max_sungen_version
+        ],
+    )
+
+    assert result.exit_code != 0, "Command should fail with invalid arguments."

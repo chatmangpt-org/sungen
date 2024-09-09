@@ -1,4 +1,5 @@
 from confz import BaseConfig, FileSource
+from pydantic import Field
 from typing import List, Optional
 from pathlib import Path
 import yaml
@@ -7,6 +8,9 @@ from importlib import import_module
 import typer
 import importlib.util
 import sys
+from inflection import underscore
+
+from sungen.utils.yaml_tools import YAMLMixin
 
 
 # Define the configuration classes for plugins using ConfZ
@@ -44,9 +48,10 @@ class AdvancedOptionsConfig(BaseConfig):
     sandbox_mode: bool
 
 
-class PluginSettings(BaseConfig):
+class PluginSettings(YAMLMixin, BaseConfig):
     """Represents the main configuration structure for a plugin."""
-    name: str
+    name: str = Field(..., description="The full name of the plugin. Must be more than 3 characters.", 
+                      min_length=3)
     short_name: str
     version: str
     description: str
@@ -107,24 +112,14 @@ def load_plugins(app: typer.Typer, plugin_dir: Optional[Path] = None):
                     print(f"Failed to load plugin '{plugin_filename}': {e}")
 
 
-def create_plugin_yaml(plugin_config: PluginSettings, file_path: str = "src/sungen/plugins/marketplace/plugin.yaml"):
-    """
-    Create a YAML file for the plugin configuration.
+def create_plugin_yaml(plugin_settings: PluginSettings, file_path: str) -> None:
+    """Create a YAML configuration file for the plugin."""
+    # Ensure the directory exists
+    directory = Path(file_path).parent
+    directory.mkdir(parents=True, exist_ok=True)  # Create the directory if it doesn't exist
 
-    Args:
-        plugin_config (PluginSettings): Plugin settings object.
-        file_path (str): Path where the YAML file will be created.
-    """
-    # Convert the plugin configuration to a dictionary
-    config_dict = plugin_config.model_dump()
-
-    # Create directories if they do not exist
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
-
-    # Write the configuration to the YAML file
-    with open(file_path, "w") as yaml_file:
-        yaml.dump(config_dict, yaml_file, default_flow_style=False)
-    print(f"Plugin configuration has been created at {file_path}")
+    # Use the YAMLMixin to serialize the plugin settings to YAML
+    plugin_settings.to_yaml(file_path)  # This will write the YAML content to the specified file path
 
 
 def load_plugin_config(file_path: str = "src/sungen/plugins/marketplace/plugin.yaml") -> PluginSettings:
@@ -160,35 +155,6 @@ def get_plugin_metadata(plugin_config: PluginSettings):
     }
 
 
-def update_plugin_settings(plugin_config: PluginSettings, updates: dict):
-    """
-    Update the plugin settings with new values.
-
-    Args:
-        plugin_config (PluginSettings): Existing plugin settings object.
-        updates (dict): Dictionary with updated settings.
-    """
-    # Create a new dictionary with the current config
-    updated_config = plugin_config.model_dump()
-
-    # Update the dictionary with new values
-    for key, value in updates.items():
-        if key in updated_config:
-            if key == 'settings':
-                updated_config[key].update(value)
-            else:
-                updated_config[key] = value
-
-    # Create a new PluginSettings instance with the updated values
-    new_plugin_config = PluginSettings(**updated_config)
-
-    # Create the YAML file with the new configuration
-    create_plugin_yaml(new_plugin_config)
-    print(f"Plugin settings have been updated and saved.")
-
-    return new_plugin_config
-
-
 def validate_plugin_compatibility(plugin_config: PluginSettings, current_version: str) -> bool:
     """
     Validate the compatibility of the plugin with the current Sungen version.
@@ -203,8 +169,6 @@ def validate_plugin_compatibility(plugin_config: PluginSettings, current_version
     min_version = plugin_config.compatibility.min_sungen_version
     max_version = plugin_config.compatibility.max_sungen_version
     return min_version <= current_version <= max_version
-
-
 
 
 # Example usage

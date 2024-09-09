@@ -32,7 +32,7 @@ class YAMLMixin:
         if file_path:
             with open(file_path, "w") as yaml_file:
                 yaml_file.write(yaml_content)
-                print(f"Wrote {file_path} to {yaml_content}")
+                # print(f"Wrote {file_path} to {yaml_content}")
         return yaml_content
     
     @classmethod

@@ -126,9 +126,14 @@ def chatbot(question, context, history="", model=GPT_DEFAULT_MODEL):
         lm = init_ol(model=model)
 
     # Include the docstring in the context
+    # full_context = f"""
+    # Chatbot Capabilities and Rules:
+    # {chatbot.__doc__}
+
+    # User Context:
+    # {context}
+    # """
     full_context = f"""
-    Chatbot Capabilities and Rules:
-    {chatbot.__doc__}
 
     User Context:
     {context}
@@ -138,18 +143,14 @@ def chatbot(question, context, history="", model=GPT_DEFAULT_MODEL):
     response = qa(question=question, context=full_context, conversation_history=history).answer
     history += response
     print(f"Chatbot: {response}")
-    confirmed = False
-    while not confirmed:
-        confirm = typer.prompt("Did this answer your question? [y/N]", default="N")
+    print("(Press Ctrl+C to close)")
 
-        if confirm.lower() in ["y", "yes"]:
-            confirmed = True
-        else:
-            want = typer.prompt("How can I help more?")
-
-            response = qa(question=want, context=full_context, conversation_history=history).answer
-            history += response
-            print(f"Chatbot: {response}")
+    while True:
+        want = typer.prompt("How can I help more?")
+        response = qa(question=want, context=full_context, conversation_history=history).answer
+        history += response
+        print(f"Chatbot: {response}")
+        print("(Press Ctrl+C to close)")
 
     return history
 

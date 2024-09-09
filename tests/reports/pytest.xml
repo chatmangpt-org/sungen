@@ -1,11 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.156" timestamp="2024-09-08T13:16:04.446764-07:00" hostname="Seans-MBP.attlocal.net"><testcase classname="tests.cmds.test_plugin_cmd" name="test_create_directory_structure" time="0.017"><failure message="AssertionError: assert PosixPath('src/plugins/TestPlugin') == PosixPath('/private/var/folders/s6/jqyw48zs39z38b_3f6f_x2sc0000gn/T/pytest-of-sac/pytest-11/test_create_directory_structur0/src/plugins/TestPlugin')">temp_plugin_dir = PosixPath('/private/var/folders/s6/jqyw48zs39z38b_3f6f_x2sc0000gn/T/pytest-of-sac/pytest-11/test_create_directory_structur0/src/plugins')
-
-    def test_create_directory_structure(temp_plugin_dir):
-        """Test creating the directory structure for a new plugin."""
-        plugin_name = "TestPlugin"
-        result = create_directory_structure(plugin_name)
-        expected_path = temp_plugin_dir / plugin_name
-&gt;       assert result == expected_path
-E       AssertionError: assert PosixPath('src/plugins/TestPlugin') == PosixPath('/private/var/folders/s6/jqyw48zs39z38b_3f6f_x2sc0000gn/T/pytest-of-sac/pytest-11/test_create_directory_structur0/src/plugins/TestPlugin')
-
-cmds/test_plugin_cmd.py:67: AssertionError</failure></testcase></testsuite></testsuites>
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="6" time="0.133" timestamp="2024-09-09T12:59:32.314305-07:00" hostname="Seans-MBP.attlocal.net"><testcase classname="tests.utils.plugins.test_plugin_tools" name="test_create_plugin_yaml" time="0.018" /><testcase classname="tests.utils.plugins.test_plugin_tools" name="test_load_plugin_config" time="0.002" /><testcase classname="tests.utils.plugins.test_plugin_tools" name="test_get_plugin_metadata" time="0.000" /><testcase classname="tests.utils.plugins.test_plugin_tools" name="test_validate_plugin_compatibility" time="0.000" /><testcase classname="tests.utils.plugins.test_plugin_tools" name="test_validate_plugin_compatibility_edge_case" time="0.000" /><testcase classname="tests.utils.plugins.test_plugin_tools" name="test_create_plugin_yaml_creates_directory_if_not_exists" time="0.001" /></testsuite></testsuites>

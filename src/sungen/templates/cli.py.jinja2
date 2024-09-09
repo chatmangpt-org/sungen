@@ -1,0 +1,20 @@
+"""CLI for {{ project_name }}."""
+
+import typer
+from {{ project_name }}.utils.cli_tools import check_or_install_packages
+
+app = typer.Typer()
+
+@app.command()
+def init(project_name: str = typer.Argument(...),
+         author_email: str = typer.Argument("{{ default_author_email }}"),
+         author_name: str = typer.Argument("{{ default_author_name }}")):
+    """Initialize the {{ project_name }} project."""
+    # Add initialization logic here
+    check_or_install_packages()
+    # ... (rest of the initialization code)
+
+# Add more CLI commands as needed
+
+if __name__ == "__main__":
+    app()

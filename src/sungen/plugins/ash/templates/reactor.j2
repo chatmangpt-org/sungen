@@ -1,0 +1,48 @@
+"""Reactor template for Ash Studio Ecosystem."""
+
+defmodule {{ reactor.name }}Reactor do
+  use Ash.Reactor
+
+  {% if reactor.inputs %}
+  input {% for input in reactor.inputs %}:{{ input.name }}{% if not loop.last %}, {% endif %}{% endfor %}
+  {% endif %}
+
+  {% for step in reactor.steps %}
+  {{ step.type }} :{{ step.name }}, {{ step.resource }} do
+    {% if step.wait_for %}
+    wait_for {% for dependency in step.wait_for %}:{{ dependency }}{% if not loop.last %}, {% endif %}{% endfor %}
+    {% endif %}
+    action :{{ step.action }}
+    {% if step.arguments %}
+    arguments %{
+      {% for key, value in step.arguments.items() %}
+      {{ key }}: {{ value }}{% if not loop.last %},{% endif %}
+      {% endfor %}
+    }
+    {% endif %}
+    {% if step.inputs %}
+    inputs %{
+      {% for key, value in step.inputs.items() %}
+      {{ key }}: {{ value }}{% if not loop.last %},{% endif %}
+      {% endfor %}
+    }
+    {% endif %}
+    {% if step.compensate %}
+    compensate fn
+      {% for error, action in step.compensate.items() %}
+      %{{ error }} -> {{ action }}
+      {% endfor %}
+    end
+    {% endif %}
+    {% if step.undo %}
+    undo fn result, _args, _context ->
+      {{ step.undo }}
+    end
+    {% endif %}
+  end
+  {% endfor %}
+
+  {% if reactor.outputs %}
+  return {% for output in reactor.outputs %}:{{ output.name }}{% if not loop.last %}, {% endif %}{% endfor %}
+  {% endif %}
+end

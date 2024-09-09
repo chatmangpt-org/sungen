@@ -22,6 +22,7 @@ app = typer.Typer()
 load_commands(app, source_dir("cmds"))
 load_plugins(app)
 
+
 @app.command()
 def init(project_name: str = typer.Argument(...),
          author_email: str = typer.Argument("todo@todo.com"),

@@ -1,0 +1,19 @@
+"""
+Name: {{ plugin_name }}
+Description: {{ plugin_description }}.
+
+Author: {{ author }}
+Version: {{ version }}
+"""
+
+import typer
+app = typer.Typer()
+
+@app.command()
+def example():
+    """Example command for {{ plugin_name }}."""
+    typer.echo("This is an example command for the {{ plugin_name }} plugin.")
+
+def register_plugin(parent_app: typer.Typer):
+    """Register the plugin with the main application."""
+    parent_app.add_typer(app, name="{{ plugin_name }}")
