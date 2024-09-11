@@ -106,10 +106,11 @@ def load_plugins(app: typer.Typer, plugin_dir: Optional[Path] = None):
 
                     # Check if the module has a 'register_plugin' function
                     if hasattr(module, "register_plugin"):
-                        module.register_plugin(app)  # Call the plugin's registration function
-
+                        module.register_plugin(app)
                 except Exception as e:
                     print(f"Failed to load plugin '{plugin_filename}': {e}")
+
+        # print(app.registered_groups)
 
 
 def create_plugin_yaml(plugin_settings: PluginSettings, file_path: str) -> None:

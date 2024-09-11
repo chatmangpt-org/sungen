@@ -1,0 +1,44 @@
+{{ plugin_name }} Plugin
+This plugin provides {{ plugin_description }}.
+
+Author: {{ author }}
+Version: {{ version }}
+"""
+
+import typer
+
+
+app = typer.Typer(name="{{ plugin_name }}", help="{{ plugin_description }}")
+
+
+@app.command()
+def example():
+    """
+    Example command for {{ plugin_name }}.
+    
+    Usage:
+    sungen {{ plugin_name }} example
+    """
+    typer.echo("This is an example command for the {{ plugin_name }} plugin.")
+
+
+def check_installation():
+    """
+    Check if {{ plugin_name }} dependencies are installed and install them if not present.
+    """
+    try:
+        if importlib.util.find_spec("{{ plugin_name }}_dep") is None:
+            print("{{ plugin_name }}_dep is not installed. Installing...")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "{{ plugin_name }}_dep"])
+            print("{{ plugin_name }}_dep has been installed successfully.")
+
+    except Exception as e:
+        print(f"Error during library installation check")
+        raise e
+
+
+def register_plugin(parent_app: typer.Typer):
+    """Register the plugin with the main application."""
+    # check_installation()
+
+    parent_app.add_typer(app, name="{{ plugin_name }}")

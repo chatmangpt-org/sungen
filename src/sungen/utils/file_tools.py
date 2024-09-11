@@ -65,7 +65,7 @@ def find_project_root(current_path: Path | str = Path(__file__)) -> Path:
 
 
 def project_dir() -> Path:
-    return Path(__file__).parent.parent.parent.parent
+    return Path(__file__).parent.parent.parent
 
 
 def data_dir(path_str="") -> Path:
@@ -77,7 +77,11 @@ def source_dir(path_str="") -> Path:
 
 
 def subcommands_dir(path_str="") -> Path:
-    return source_dir() / "subcommands" / path_str
+    return source_dir() / "cmds" / path_str
+
+
+def plugins_dir(path_str="") -> Path:
+    return source_dir() / "plugins" / path_str
 
 
 def dspy_modules_dir(path_str="") -> Path:
@@ -106,6 +110,14 @@ def pages_dir(path_str="") -> Path:
 
 def dsl_dir(path_str="") -> Path:
     return source_dir() / "dsl" / path_str
+
+
+def tests_dir(path_str="") -> Path:
+    return project_dir() / "tests" / path_str
+
+
+def features_dir(path_str="") -> Path:
+    return tests_dir() / "features" / path_str
 
 
 def get_source(filename):

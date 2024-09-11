@@ -1,0 +1,36 @@
+advanced:
+  parallel_install: true
+  sandbox_mode: false
+  secure_downloads: true
+author: Sean Chatman
+compatibility:
+  max_sungen_version: 2.0.0
+  min_sungen_version: 1.0.0
+dependencies:
+- plugin: core
+  version: '>=1.0.0'
+description: Automatically generates missing test code and step definitions for feature files using pytest-bdd, simplifying the testing process and reducing development time.
+license: MIT
+marketplace:
+  category: Utilities
+  featured: false
+  keywords:
+  - auto_bdd
+name: auto_bdd
+settings:
+  auto_update_check: true
+  backup_before_update: true
+  cache_timeout: 300
+  connection_timeout: 30
+  default_marketplace: https://marketplace.sungen.com
+  log_level: INFO
+  retry_count: 3
+short_name: aut
+source: https://github.com/sungen/auto_bdd
+support:
+  contact_email: support@sungen.com
+  documentation_url: https://docs.sungen.com/auto_bdd
+  issues_url: https://github.com/sungen/auto_bdd/issues
+tags:
+- auto_bdd
+version: 1.0.0

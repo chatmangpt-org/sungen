@@ -36,7 +36,7 @@ def init(project_name: str = typer.Argument(...),
         print("Project name should not start with a hyphen or underscore.")
         sys.exit(1)
 
-    check_or_install_packages()
+    # check_or_install_packages()
 
     extra_context = Munch(project_name=project_name,
                           author_email=author_email,

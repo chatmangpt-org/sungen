@@ -2,21 +2,21 @@ advanced:
   parallel_install: true
   sandbox_mode: false
   secure_downloads: true
-author: John Doe
+author: Sean Chatman
 compatibility:
   max_sungen_version: 2.0.0
   min_sungen_version: 1.0.0
 dependencies:
 - plugin: core
   version: '>=1.0.0'
-description: "This\n plugin performs text interpolation."
+description: This plugin performs text interpolation.
 license: MIT
 marketplace:
   category: Utilities
   featured: false
   keywords:
-  - my_interpolation_plugin
-name: my_interpolation_plugin
+  - interpolation
+name: interpolation
 settings:
   auto_update_check: true
   backup_before_update: true
@@ -25,12 +25,12 @@ settings:
   default_marketplace: https://marketplace.sungen.com
   log_level: INFO
   retry_count: 3
-short_name: my_
-source: https://github.com/sungen/my_interpolation_plugin
+short_name: int
+source: https://github.com/sungen/interpolation
 support:
   contact_email: support@sungen.com
-  documentation_url: https://docs.sungen.com/my_interpolation_plugin
-  issues_url: https://github.com/sungen/my_interpolation_plugin/issues
+  documentation_url: https://docs.sungen.com/interpolation
+  issues_url: https://github.com/sungen/interpolation/issues
 tags:
-- my_interpolation_plugin
+- interpolation
 version: 1.0.0
