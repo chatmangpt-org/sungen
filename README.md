@@ -19,6 +19,10 @@ To install the Sungen package, use `pip`:
 pip install sungen
 ```
 
+## **Documentation**
+
+For detailed guidance on configuring Aider for optimal AI coding, refer to the [Configuring Aider for Optimal AI Coding](src/sungen/plugins/aider/devlog/chapters/configuring_aider.md) chapter.
+
 ## **Getting Started**
 
 To get an overview of the available commands, use the help option:
