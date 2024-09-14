@@ -1,6 +1,6 @@
 class ProductService:
     def get_product(self, product_id):
-        # Logic to retrieve product by ID
+        # Logic to get product by ID
         return {"product_id": product_id, "name": "Sample Product"}
 
     def create_product(self, product_data):

@@ -1,6 +1,6 @@
 class UserService:
     def get_user(self, user_id):
-        # Logic to retrieve user by ID
+        # Logic to get user by ID
         return {"user_id": user_id, "name": "John Doe"}
 
     def create_user(self, user_data):

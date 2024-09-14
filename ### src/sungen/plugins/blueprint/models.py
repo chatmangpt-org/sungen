@@ -1,2 +1,2 @@
-# This file will contain database models in the future.
-# For now, it is a placeholder.
+# Placeholder for database models
+# In a real application, this would include ORM models for the database
