@@ -1,0 +1,69 @@
+title: Summary
+
+prefix_chapters:
+  - title: Introduction
+    path: README.md
+
+numbered_chapters:
+  - title: "Part 1: Understanding Adversarial Collaboration"
+    subchapters:
+      - title: "What is Adversarial Collaboration?"
+        path: chapters/adversarial_collaboration.md
+      - title: "The Role of Epistemic Agency"
+        path: chapters/epistemic_agency.md
+      - title: "Zero Trust Framework in AI Development"
+        path: chapters/zero_trust_framework.md
+
+  - title: "Part 2: Configuring AI Tools for Adversarial Collaboration"
+    subchapters:
+      - title: "Configuring Aider for Optimal AI Coding"
+        path: chapters/configuring_aider.md
+      - title: "Using the CONVENTIONS.md Effectively"
+        path: chapters/conventions_md.md
+      - title: "Setting Up the Project Structure"
+        path: chapters/project_structure.md
+      - title: "Defining Boundaries: Read-Only Files"
+        path: chapters/read_only_files.md
+
+  - title: "Part 3: Practical Application with Aider"
+    subchapters:
+      - title: "Creating a New Module with Multiple Approaches"
+        path: chapters/multiple_approaches.md
+      - title: "Evaluating AI Suggestions: A Critical Engagement"
+        path: chapters/evaluating_suggestions.md
+      - title: Generating Counterexamples for Robustness
+        path: chapters/generating_counterexamples.md
+      - title: Identifying Security Vulnerabilities
+        path: chapters/security_vulnerabilities.md
+      - title: "Committing with Control: The Selective Commit Process"
+        path: chapters/selective_commit.md
+
+  - title: "Part 4: Advanced Techniques in Adversarial Collaboration"
+    subchapters:
+      - title: Dynamic Feedback Loops
+        path: chapters/dynamic_feedback_loops.md
+      - title: Transparency and Explainability in AI Decisions
+        path: chapters/transparency_explainability.md
+      - title: Using Aider for Multi-File Updates
+        path: chapters/multi_file_updates.md
+      - title: Improving Code Quality through Adversarial Testing
+        path: chapters/adversarial_testing.md
+
+  - title: "Part 5: Reflections and Future Directions"
+    subchapters:
+      - title: "The Advantages of Adversarial Collaboration"
+        path: chapters/advantages_adversarial_collaboration.md
+      - title: "Obligations and Ethical Considerations"
+        path: chapters/ethical_considerations.md
+      - title: "Potential Areas for Further Research"
+        path: chapters/further_research.md
+      - title: "A Vision for 'AI for Good'"
+        path: chapters/ai_for_good.md
+
+suffix_chapters:
+  - title: Glossary of Terms
+    path: appendix/glossary.md
+  - title: References and Further Reading
+    path: appendix/references.md
+  - title: Contributors
+    path: misc/contributors.md

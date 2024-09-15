@@ -1,1 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="6" time="0.133" timestamp="2024-09-09T12:59:32.314305-07:00" hostname="Seans-MBP.attlocal.net"><testcase classname="tests.utils.plugins.test_plugin_tools" name="test_create_plugin_yaml" time="0.018" /><testcase classname="tests.utils.plugins.test_plugin_tools" name="test_load_plugin_config" time="0.002" /><testcase classname="tests.utils.plugins.test_plugin_tools" name="test_get_plugin_metadata" time="0.000" /><testcase classname="tests.utils.plugins.test_plugin_tools" name="test_validate_plugin_compatibility" time="0.000" /><testcase classname="tests.utils.plugins.test_plugin_tools" name="test_validate_plugin_compatibility_edge_case" time="0.000" /><testcase classname="tests.utils.plugins.test_plugin_tools" name="test_create_plugin_yaml_creates_directory_if_not_exists" time="0.001" /></testsuite></testsuites>
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.051" timestamp="2024-09-11T10:44:32.254203-07:00" hostname="Seans-MBP.attlocal.net"><testcase classname="tests.test_docstring_bdd" name="test_incrementing_the_counter" time="0.017"><failure message="assert 2 == 1">fixturefunc = &lt;function counter_should_be at 0x105612e80&gt;
+request = &lt;FixtureRequest for &lt;Function test_incrementing_the_counter&gt;&gt;
+kwargs = {'counter': {'value': 2}, 'expected': 1}
+
+    def call_fixture_func(
+        fixturefunc: _FixtureFunc[FixtureValue], request: FixtureRequest, kwargs
+    ) -&gt; FixtureValue:
+        if is_generator(fixturefunc):
+            fixturefunc = cast(
+                Callable[..., Generator[FixtureValue, None, None]], fixturefunc
+            )
+            generator = fixturefunc(**kwargs)
+            try:
+                fixture_result = next(generator)
+            except StopIteration:
+                raise ValueError(f"{request.fixturename} did not yield a value") from None
+            finalizer = functools.partial(_teardown_yield_fixture, fixturefunc, generator)
+            request.addfinalizer(finalizer)
+        else:
+            fixturefunc = cast(Callable[..., FixtureValue], fixturefunc)
+&gt;           fixture_result = fixturefunc(**kwargs)
+
+../../../Library/Caches/pypoetry/virtualenvs/stargen-pwn7Ka8j-py3.12/lib/python3.12/site-packages/_pytest/fixtures.py:897: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+counter = {'value': 2}, expected = 1
+
+    @then(parsers.parse("the counter should be {expected:d}"))
+    def counter_should_be(counter, expected):
+        """Check that the counter has the expected value."""
+&gt;       assert counter["value"] == expected
+E       assert 2 == 1
+
+test_docstring_bdd.py:43: AssertionError</failure></testcase></testsuite></testsuites>

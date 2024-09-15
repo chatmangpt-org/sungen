@@ -1,0 +1,154 @@
+---
+module-name: "{{ outputs['Project Overview'].software_project }}"
+version: "{{ outputs['Project Overview'].version }}"
+description: "{{ outputs['Project Overview'].description }}"
+related-modules:
+  {% for module in outputs['Project Overview'].related_modules %}
+  - name: {{ module.name }}
+    path: {{ module.path }}
+  {% endfor %}
+technologies:
+  {% for tech in outputs['Project Overview'].technologies %}
+  - {{ tech }}
+  {% endfor %}
+conventions:
+  {% for convention in outputs['Development Model'].conventions %}
+  - {{ convention }}
+  {% endfor %}
+architecture:
+  style: "{{ outputs['Architecture Model'].architecture_style }}"
+  main-components:
+    {% for component in outputs['Architecture Model'].architecture_components %}
+    - {{ component }}
+    {% endfor %}
+  data-flow: "{{ outputs['Architecture Model'].data_flow }}"
+development:
+  setup-steps:
+    {% for step in outputs['Development Model'].setup_steps %}
+    - {{ step }}
+    {% endfor %}
+  build-command: "{{ outputs['Development Model'].build_command }}"
+  test-command: "{{ outputs['Development Model'].test_command }}"
+business-requirements:
+  key-features:
+    {% for feature in outputs['Business Requirements'].key_features %}
+    - {{ feature }}
+    {% endfor %}
+  target-audience: "{{ outputs['Business Requirements'].target_audience }}"
+  success-metrics:
+    {% for metric in outputs['Business Requirements'].success_metrics %}
+    - {{ metric }}
+    {% endfor %}
+quality-assurance:
+  testing-frameworks:
+    {% for framework in outputs['Quality Assurance'].testing_frameworks %}
+    - {{ framework }}
+    {% endfor %}
+  coverage-threshold: "{{ outputs['Quality Assurance'].coverage_threshold }}"
+  performance-benchmarks:
+    {% for benchmark in outputs['Quality Assurance'].performance_benchmarks %}
+    - {{ benchmark }}
+    {% endfor %}
+deployment:
+  platform: "{{ outputs['Deployment Model'].deployment_platform }}"
+  cicd-pipeline:
+    {% for stage in outputs['Deployment Model'].cicd_pipeline %}
+    - {{ stage }}
+    {% endfor %}
+  staging-environment: "{{ outputs['Deployment Model'].staging_environment }}"
+  production-environment: "{{ outputs['Deployment Model'].production_environment }}"
+---
+
+# {{ outputs['Project Overview'].software_project }}
+
+## Overview
+
+{{ outputs['Project Overview'].description }}
+
+- **Version**: {{ outputs['Project Overview'].version }}
+- **Primary Language**: {{ outputs['Project Overview'].programming_language }}
+- **Technologies Used**:
+  {% for tech in outputs['Project Overview'].technologies %}
+  - {{ tech }}
+  {% endfor %}
+
+## Architecture
+
+- **Architecture Style**: {{ outputs['Architecture Model'].architecture_style }}
+- **Components**:
+  {% for component in outputs['Architecture Model'].architecture_components %}
+  - {{ component }}
+  {% endfor %}
+- **Data Flow**:
+  {{ outputs['Architecture Model'].data_flow }}
+
+{% if outputs['Architecture Model'].diagrams %}
+- **Diagrams**:
+  {% for diagram in outputs['Architecture Model'].diagrams %}
+  - Type: {{ diagram.type }}
+  - Description: {{ diagram.description }}
+  {% endfor %}
+{% endif %}
+
+## Development
+
+- **Setup Steps**:
+  {% for step in outputs['Development Model'].setup_steps %}
+  - {{ step }}
+  {% endfor %}
+- **Build Command**: {{ outputs['Development Model'].build_command }}
+- **Test Command**: {{ outputs['Development Model'].test_command }}
+- **Coding Conventions**:
+  {% for convention in outputs['Development Model'].conventions %}
+  - {{ convention }}
+  {% endfor %}
+- **Directives**:
+  {% for directive in outputs['Development Model'].directives %}
+  - {{ directive }}
+  {% endfor %}
+
+## Business Requirements
+
+- **Key Features**:
+  {% for feature in outputs['Business Requirements'].key_features %}
+  - {{ feature }}
+  {% endfor %}
+- **Target Audience**: {{ outputs['Business Requirements'].target_audience }}
+- **Business Objectives**:
+  {% for objective in outputs['Business Requirements'].business_objectives %}
+  - {{ objective }}
+  {% endfor %}
+- **Success Metrics**:
+  {% for metric in outputs['Business Requirements'].success_metrics %}
+  - {{ metric }}
+  {% endfor %}
+
+## Quality Assurance
+
+- **Testing Frameworks**:
+  {% for framework in outputs['Quality Assurance'].testing_frameworks %}
+  - {{ framework }}
+  {% endfor %}
+- **Code Coverage Threshold**: {{ outputs['Quality Assurance'].coverage_threshold }}
+- **Performance Benchmarks**:
+  {% for benchmark in outputs['Quality Assurance'].performance_benchmarks %}
+  - {{ benchmark }}
+  {% endfor %}
+- **Quality Standards**:
+  {% for standard in outputs['Quality Assurance'].quality_standards %}
+  - {{ standard }}
+  {% endfor %}
+
+## Deployment
+
+- **Deployment Platform**: {{ outputs['Deployment Model'].deployment_platform }}
+- **CI/CD Pipeline**:
+  {% for stage in outputs['Deployment Model'].cicd_pipeline %}
+  - {{ stage }}
+  {% endfor %}
+- **Staging Environment**: {{ outputs['Deployment Model'].staging_environment }}
+- **Production Environment**: {{ outputs['Deployment Model'].production_environment }}
+- **Rollback Procedures**:
+  {% for procedure in outputs['Deployment Model'].rollback_procedures %}
+  - {{ procedure }}
+  {% endfor %}

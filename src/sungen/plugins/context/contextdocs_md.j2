@@ -1,0 +1,16 @@
+---
+contextdocs:
+  {% for source in contextdocs.contextdocs %}
+  - name: {{ source.name }}
+    relationship: {{ source.relationship }}
+    resources:
+      {% for resource in source.resources %}
+      - title: {{ resource.title }}
+        url: {{ resource.url }}
+      {% endfor %}
+  {% endfor %}
+---
+
+# Additional Documentation Notes
+
+This section can include any free-form text to provide context about the listed documentation sources, their relevance to the project, or any other pertinent information.

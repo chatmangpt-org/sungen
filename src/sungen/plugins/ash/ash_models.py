@@ -148,6 +148,21 @@ class AshResource(BaseModel):
 class AshRegistry(BaseModel):
     resources: List[AshResource] = Field(default_factory=list)
 
+class ExecutionConfig(BaseModel):
+    timeout: Optional[int] = None
+
+class AuthorizationConfig(BaseModel):
+    authorize: str = "default"
+
+class GraphQLConfig(BaseModel):
+    authorize: bool = True
+
+class Policy(BaseModel):
+    name: str
+    type: str
+    condition: str
+    action: str
+
 class AshDomain(BaseModel):
     name: str
     module: str
@@ -170,17 +185,4 @@ class AshEngine(BaseModel):
     api: AshApi
     registry: AshRegistry
 
-class ExecutionConfig(BaseModel):
-    timeout: Optional[int] = None
 
-class AuthorizationConfig(BaseModel):
-    authorize: str = "default"
-
-class GraphQLConfig(BaseModel):
-    authorize: bool = True
-
-class Policy(BaseModel):
-    name: str
-    type: str
-    condition: str
-    action: str

@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]  # https://python-poetry.org/docs/pyproject/
 name = "sungen"
-version = "2024.9.7.3"
+version = "2024.9.14"
 description = "TODO"
 authors = ["Sean Chatman <info@chatmangpt.com>"]
 readme = "README.md"
@@ -18,7 +18,7 @@ coloredlogs = ">=15.0.1"
 fastapi = { extras = ["all"], version = ">=0.110.1" }
 gunicorn = ">=21.2.0"
 poethepoet = ">=0.25.0"
-python = ">=3.10,<4.0"
+python = ">=3.10,<3.13"
 typer = { extras = ["all"], version = ">=0.12.0" }
 uvicorn = { extras = ["standard"], version = ">=0.29.0" }
 dspy-ai = "^2.4.10"
@@ -50,6 +50,7 @@ pylint = "^3.2.7"
 icontract = "^2.6.6"
 python-dotenv = "^1.0.1"
 wcmatch = "^9.0"
+aider-chat = "^0.56.0"
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 coverage = { extras = ["toml"], version = ">=7.4.4" }

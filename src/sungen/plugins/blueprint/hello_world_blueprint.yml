@@ -1,0 +1,16 @@
+additional_args: []
+auto_test: false
+context_files: []
+conventions_file: CONVENTIONS.md
+dark_mode: false
+description: A blueprint to create a Hello World Python script.
+files_to_create:
+- main.py
+files_to_edit: []
+lint: false
+message: Create all of the files and functions in the requirements. Don't stop until all are created.
+model: gpt-4o-mini
+module_name: hello_world_blueprint
+pretty_output: true
+read_only_files: ["/Users/sac/dev/sungen/src/sungen/plugins/blueprint/.context.md"]
+version: 1.0.0

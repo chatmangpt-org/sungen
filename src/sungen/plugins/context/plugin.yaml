@@ -1,0 +1,36 @@
+advanced:
+  parallel_install: true
+  sandbox_mode: false
+  secure_downloads: true
+author: Your Name
+compatibility:
+  max_sungen_version: 2.0.0
+  min_sungen_version: 1.0.0
+dependencies:
+- plugin: core
+  version: '>=1.0.0'
+description: This plugin generates comprehensive .context.md and .contextdocs.md files for software projects based on the Codebase Context Specification.
+license: MIT
+marketplace:
+  category: Utilities
+  featured: false
+  keywords:
+  - context
+name: context
+settings:
+  auto_update_check: true
+  backup_before_update: true
+  cache_timeout: 300
+  connection_timeout: 30
+  default_marketplace: https://marketplace.sungen.com
+  log_level: INFO
+  retry_count: 3
+short_name: con
+source: https://github.com/sungen/context
+support:
+  contact_email: support@sungen.com
+  documentation_url: https://docs.sungen.com/context
+  issues_url: https://github.com/sungen/context/issues
+tags:
+- context
+version: 1.0.0

@@ -27,7 +27,7 @@ from io import StringIO
 
 from sungen.utils.str_tools import pythonic_str
 
-app = typer.Typer()
+app = typer.Typer(name="plugin")
 
 # Templates for plugin files
 plugin_py_template = '''"""
@@ -60,6 +60,11 @@ def check_installation():
     Check if {{ plugin_name }} dependencies are installed and install them if not present.
     """
     try:
+        import importlib.util
+        import subprocess
+        import sys
+
+
         if importlib.util.find_spec("{{ plugin_name }}_dep") is None:
             print("{{ plugin_name }}_dep is not installed. Installing...")
             subprocess.check_call([sys.executable, "-m", "pip", "install", "{{ plugin_name }}_dep"])

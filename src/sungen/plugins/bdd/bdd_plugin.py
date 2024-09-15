@@ -71,6 +71,7 @@ def run_code_generator(feature_file: Path, output_dir: Path) -> None:
     Run the test code generator based on the provided Gherkin feature file.
     """
     # Ensure pytest-bdd and pytest are available
+    # Removed import check here
     typer.echo(f"Running code generator for feature file: {feature_file}")
     command = f"pytest-bdd generate {feature_file}"
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
@@ -111,7 +112,6 @@ def generate_gherkin_command(
         generate_gherkin(prompt, output_file)
 
         if generate_code:
-            # Generate the test code for the created Gherkin feature
             run_code_generator(output_file, output_dir)
     except Exception as e:
         typer.echo(f"Failed to generate Gherkin feature: {str(e)}")
