@@ -8,8 +8,8 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.12 (stargen-pwn7Ka8j-py3.12)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="dspygen" />
     <orderEntry type="module" module-name="bookgen" />
+    <orderEntry type="module" module-name="aider" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />

@@ -8,31 +8,6 @@ app = typer.Typer(
     help="Plugin for creating, managing, and executing blueprints in Aider."
 )
 
-def create_blueprint_logic(
-        blueprint_name: str, description: str, files_to_create: List[str], files_to_edit: List[str],
-        read_only_files: List[str], model: str, auto_test: bool, lint: bool,
-        auto_commit: bool, verbose: bool, additional_args: List[str], message: str):
-    """
-    Logic for creating a new blueprint.
-    """
-    blueprint = AiderBlueprint(
-        module_name=blueprint_name,
-        description=description,
-        files_to_create=files_to_create,
-        files_to_edit=files_to_edit,
-        read_only_files=read_only_files,
-        model=model,
-        auto_test=auto_test,
-        lint=lint,
-        auto_commit=auto_commit,
-        verbose=verbose,
-        additional_args=additional_args,
-        message=message
-    )
-
-    blueprint_file = f"{blueprint_name}.yml"
-    blueprint.to_yaml(blueprint_file)
-    typer.echo(f"Blueprint '{blueprint_name}' created and saved to {blueprint_file}.")
 
 @app.command()
 def create_blueprint(

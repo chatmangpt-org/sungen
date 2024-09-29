@@ -43,7 +43,7 @@ def generate_summary_md(config: SummaryConfig) -> str:
 
 def main():
     """Main function"""
-    from dspygen.utils.dspy_tools import init_ol
+    from sungen.utils.dspy_tools import init_ol
     init_ol()
 
     config = SummaryConfig()

@@ -42,7 +42,7 @@ def extract_valid_dicts(s: str) -> list[dict[str, Any]]:
 
 
 def main():
-    from dspygen.utils.dspy_tools import init_dspy
+    from sungen.utils.dspy_tools import init_dspy
     init_dspy()
 
     class ContactModel(BaseModel, InstanceMixin, YAMLMixin):

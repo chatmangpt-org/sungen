@@ -23,7 +23,6 @@ class PromptToPydanticInstanceSignature(Signature):
     """Synthesize the prompt into the kwargs to fit the model.
     Do not duplicate the field descriptions
     """
-
     root_pydantic_model_class_name = InputField(
         desc="The class name of the pydantic model to receive the kwargs"
     )
@@ -41,7 +40,6 @@ class PromptToPydanticInstanceSignature(Signature):
 
 class PromptToPydanticInstanceErrorSignature(Signature):
     """Synthesize the prompt into the kwargs fit the model"""
-
     error = InputField(desc="Error message to fix the kwargs")
 
     root_pydantic_model_class_name = InputField(
@@ -137,6 +135,11 @@ class GenPydanticInstance(dspy.Module):
 
     def __call__(self, prompt):
         return self.forward(prompt=prompt)
+
+
+def gen_instance(model, prompt):
+    model_module = GenPydanticInstance(model)
+    return model_module(prompt)
 
 
 class GenPydanticDict(dspy.Module):
@@ -271,7 +274,7 @@ def get_model_source(model: Type[BaseModel], already_seen: Set[Type[BaseModel]] 
 
 
 def main():
-    from dspygen.utils.dspy_tools import init_ol
+    from sungen.utils.dspy_tools import init_ol
     init_ol(max_tokens=3000)
 
     # model_module = GenPydanticInstance(DMN)

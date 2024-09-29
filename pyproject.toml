@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]  # https://python-poetry.org/docs/pyproject/
 name = "sungen"
-version = "2024.9.14"
+version = "2024.9.28"
 description = "TODO"
 authors = ["Sean Chatman <info@chatmangpt.com>"]
 readme = "README.md"
@@ -21,7 +21,7 @@ poethepoet = ">=0.25.0"
 python = ">=3.10,<3.13"
 typer = { extras = ["all"], version = ">=0.12.0" }
 uvicorn = { extras = ["standard"], version = ">=0.29.0" }
-dspy-ai = "^2.4.10"
+dspy-ai = "^2.5.0"
 tiktoken = "^0.7.0"
 jsonschema = "^4.22.0"
 aiofiles = "^24.1.0"
@@ -50,7 +50,7 @@ pylint = "^3.2.7"
 icontract = "^2.6.6"
 python-dotenv = "^1.0.1"
 wcmatch = "^9.0"
-aider-chat = "^0.56.0"
+pytest-watch = "^4.2.0"
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 coverage = { extras = ["toml"], version = ">=7.4.4" }
@@ -202,3 +202,7 @@ pub = "poetry publish --build"
 
     [[tool.poe.tasks.test.sequence]]
     cmd = "coverage xml"
+
+  [tool.poe.tasks.watch]
+  help = "Watch for changes in tests and run them"
+  cmd = "ptw tests -- --maxfail=1 --disable-warnings -q"

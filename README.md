@@ -1,6 +1,6 @@
 # **Sungen**
 
-**Sungen** is a versatile utility package derived from `dspygen` that offers an extensive suite of tools and utilities designed for AI development, project management, and workflow automation. With a user-friendly command-line interface (CLI), Sungen streamlines the development process, automates repetitive tasks, and enhances productivity, making it an essential toolkit for AI projects and modern software architectures.
+**Sungen** is a versatile utility package derived from `sungen` that offers an extensive suite of tools and utilities designed for AI development, project management, and workflow automation. With a user-friendly command-line interface (CLI), Sungen streamlines the development process, automates repetitive tasks, and enhances productivity, making it an essential toolkit for AI projects and modern software architectures.
 
 ## **Key Features**
 
