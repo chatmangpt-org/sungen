@@ -10,6 +10,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="bookgen" />
     <orderEntry type="module" module-name="aider" />
+    <orderEntry type="module" module-name="dslmodel" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />

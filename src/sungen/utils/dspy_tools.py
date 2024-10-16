@@ -16,12 +16,10 @@ from concurrent.futures import as_completed
 from typing import TypeVar, Type, Generic, List, Optional
 # typed_predictors_tools.py
 
-from dspy import TypedPredictor, InputField, OutputField, Signature
 from pydantic import BaseModel, create_model
 
 import dspy
 
-from sungen.utils.str_tools import pythonic_str
 
 GPT_DEFAULT_MODEL = "gpt-4o-mini"
 
@@ -29,7 +27,7 @@ GPT_DEFAULT_MODEL = "gpt-4o-mini"
 T = TypeVar('T', bound=BaseModel)
 
 
-class PredictType(BaseModel, Generic[T]):
+class PredictType:
     """
     Represents a single prediction task.
 
@@ -67,14 +65,13 @@ def init_dspy(model: str = GPT_DEFAULT_MODEL,
     :returns: The configured language model instance.
     :rtype: `dspy.LM`
     """
-    raise NotImplementedError("This function is obsolete and should not be used.")
-    # if lm_instance:
-    #     dspy.settings.configure(lm=lm_instance, experimental=experimental)
-    #     return lm_instance
-    # else:
-    #     lm = lm_class(max_tokens=max_tokens, model=model, api_key=api_key, temperature=temperature)
-    #     dspy.settings.configure(lm=lm, experimental=experimental)
-    #     return lm
+    if lm_instance:
+        dspy.settings.configure(lm=lm_instance, experimental=experimental)
+        return lm_instance
+    else:
+        lm = lm_class(max_tokens=max_tokens, model=model, api_key=api_key, temperature=temperature)
+        dspy.settings.configure(lm=lm, experimental=experimental)
+        return lm
 
 
 def init_ol(model: str = "qwen2",
@@ -139,7 +136,7 @@ def predict_type(input_data: dict, output_model: Type[T]) -> T:
     """
     # Create an instance of GenPydanticInstance
     from sungen.dspy_modules.gen_pydantic_instance import gen_instance
-    model_instance = gen_instance(output_model, prompt=str(input_data))
+    model_instance = gen_instance(output_model, prompt=input_data)
 
     # Return the generated model instance
     return model_instance
@@ -222,7 +219,6 @@ def init_lm(model: str = "openai/gpt-4o-mini",
             cache: bool = True,
             model_type: Optional[str] = "text",
             stop: Optional[list] = None,
-            adapter: Optional[dspy.ChatAdapter] = None,
             experimental: bool = True) -> dspy.LM:
     """
     Initialize a language model using the new DSPy 2.5 setup.
@@ -249,26 +245,33 @@ def init_lm(model: str = "openai/gpt-4o-mini",
         dspy.settings.configure(lm=lm, experimental=experimental)
         return lm
 
-    lm = dspy.LM(model=model, api_key=api_key, api_base=api_base,
-                 temperature=temperature, max_tokens=max_tokens,
-                 cache=cache, model_type=model_type, stop=stop)
+    lm = dspy.LM(model=model)
 
     # Configure the LM with DSPy settings
-    dspy.settings.configure(lm=lm, adapter=adapter, experimental=experimental)
+    dspy.settings.configure(lm=lm, adapter=None, experimental=experimental)
 
     return lm
 
 
 def init_instant():
     """Initialize the instant version of the model."""
-    return init_lm("groq/llama-3.1-8b-instant", model_type="chat", max_tokens=2000)
+    return init_lm("groq/llama-3.1-8b-instant", model_type="chat", max_tokens=8000)
 
 
 def init_versatile():
     """Initialize the versatile version of the model."""
-    return init_lm("groq/llama-3.1-70b-versatile", model_type="chat", max_tokens=2000)
+    return init_lm("groq/llama-3.1-70b-versatile", model_type="chat", max_tokens=8000)
 
 
 def init_text():
     """Initialize the text preview version of the model."""
-    return init_lm("groq/llama-3.2-90b-text-preview", model_type="chat", max_tokens=2000)
+    return init_lm("groq/llama-3.2-90b-text-preview", model_type="chat", max_tokens=8000)
+
+
+def main():
+    """Main function"""
+    init_dspy()
+
+
+if __name__ == '__main__':
+    main()

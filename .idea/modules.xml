@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../aider/.idea/aider.iml" filepath="$PROJECT_DIR$/../aider/.idea/aider.iml" />
       <module fileurl="file://$PROJECT_DIR$/../bookgen/.idea/bookgen.iml" filepath="$PROJECT_DIR$/../bookgen/.idea/bookgen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../dslmodel/.idea/dslmodel.iml" filepath="$PROJECT_DIR$/../dslmodel/.idea/dslmodel.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/stargen.iml" filepath="$PROJECT_DIR$/.idea/stargen.iml" />
     </modules>
   </component>

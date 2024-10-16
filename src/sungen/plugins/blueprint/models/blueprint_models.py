@@ -4,7 +4,7 @@ from typing import List, Optional
 from sungen.utils.yaml_tools import YAMLMixin
 
 
-class AiderBlueprint(BaseModel, YAMLMixin):
+class AiderBlueprint(DSLModel):
     """Defines a Blueprint for using Aider."""
     module_name: str = Field(..., description="Name of the blueprint module.")
     version: str = Field(default="1.0.0", description="Version of the blueprint.")
@@ -22,7 +22,7 @@ class AiderBlueprint(BaseModel, YAMLMixin):
     context_files: List[str] = Field(default_factory=list, description="List of relevant context files.")
 
 
-class CodeBlueprint(BaseModel, YAMLMixin):
+class CodeBlueprint(DSLModel):
     """
     Defines a blueprint for configuring and running commands with code generation tools in an enterprise environment.
 

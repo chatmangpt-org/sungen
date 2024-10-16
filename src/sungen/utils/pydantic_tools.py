@@ -4,7 +4,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from sungen.dspy_modules.gen_pydantic_instance import GenPydanticDict
+# from sungen.dspy_modules.gen_pydantic_instance import GenPydanticDict
 from sungen.utils.yaml_tools import YAMLMixin
 
 
@@ -14,8 +14,8 @@ class InstanceMixin:
         """
         Turns the prompt into the instance of the Pydantic model.
         """
-        inst_dict = GenPydanticDict(model=cls)(prompt)
-        return cls.model_validate(inst_dict)
+        # inst_dict = GenPydanticDict(model=cls)(prompt)
+        return cls.model_validate({})
 
 
 def extract_valid_dicts(s: str) -> list[dict[str, Any]]:
