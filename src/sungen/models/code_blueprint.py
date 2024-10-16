@@ -1,10 +1,10 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict
 
-from sungen.utils.yaml_tools import YAMLMixin
+from dslmodel import DSLModel
 
 
-class CodeBlueprint(BaseModel, YAMLMixin):
+class CodeBlueprint(DSLModel):
     """
     Defines a blueprint for configuring and running commands with code generation tools in an enterprise environment.
 
@@ -83,7 +83,7 @@ class CodeBlueprint(BaseModel, YAMLMixin):
     )
 
 
-class EnterpriseCodeBlueprint(BaseModel, YAMLMixin):
+class EnterpriseCodeBlueprint(DSLModel):
     """
     Defines a blueprint for configuring and running commands with code generation tools in an enterprise environment.
 

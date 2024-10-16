@@ -49,7 +49,7 @@ pylint = "^3.2.7"
 icontract = "^2.6.6"
 python-dotenv = "^1.0.1"
 pytest-watch = "^4.2.0"
-dslmodel = "^2024.10.13"
+dslmodel = "2024.10.15"
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 coverage = { extras = ["toml"], version = ">=7.4.4" }

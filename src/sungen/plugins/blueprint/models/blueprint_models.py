@@ -1,7 +1,7 @@
-from pydantic import BaseModel, Field
+from pydantic import  Field
 from typing import List, Optional
 
-from sungen.utils.yaml_tools import YAMLMixin
+from dslmodel import DSLModel
 
 
 class AiderBlueprint(DSLModel):

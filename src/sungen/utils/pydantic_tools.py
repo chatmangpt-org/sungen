@@ -4,8 +4,10 @@ from typing import Any
 
 from pydantic import BaseModel
 
+from dslmodel import DSLModel
+
+
 # from sungen.dspy_modules.gen_pydantic_instance import GenPydanticDict
-from sungen.utils.yaml_tools import YAMLMixin
 
 
 class InstanceMixin:
@@ -45,7 +47,7 @@ def main():
     from sungen.utils.dspy_tools import init_dspy
     init_dspy()
 
-    class ContactModel(BaseModel, InstanceMixin, YAMLMixin):
+    class ContactModel(DSLModel):
         name: str
         age: int
         email: str

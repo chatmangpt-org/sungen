@@ -10,9 +10,8 @@ import dspy
 from pydantic import BaseModel, Field
 from typer import Typer
 
-from sungen.typetemp.functional import render
+from dslmodel import DSLModel
 from sungen.utils.dspy_tools import init_dspy
-from sungen.utils.yaml_tools import YAMLMixin
 
 app = Typer()
 
@@ -45,7 +44,7 @@ class TyperCommand(BaseModel):
     help: str = Field(..., min_length=1, description="The help text for the command")
 
 
-class TyperCLI(BaseModel, YAMLMixin):
+class TyperCLI(DSLModel):
     name: str = Field(..., min_length=1, description="The name of the CLI application")
     commands: list[TyperCommand] = Field(
         ..., description="The commands of the CLI application"

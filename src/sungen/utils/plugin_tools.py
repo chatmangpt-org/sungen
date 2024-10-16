@@ -10,7 +10,7 @@ import importlib.util
 import sys
 from inflection import underscore
 
-from sungen.utils.yaml_tools import YAMLMixin
+from dslmodel.mixins import ToFromDSLMixin
 
 
 # Define the configuration classes for plugins using ConfZ
@@ -48,7 +48,7 @@ class AdvancedOptionsConfig(BaseConfig):
     sandbox_mode: bool
 
 
-class PluginSettings(YAMLMixin, BaseConfig):
+class PluginSettings(ToFromDSLMixin, BaseConfig):
     """Represents the main configuration structure for a plugin."""
     name: str = Field(..., description="The full name of the plugin. Must be more than 3 characters.", 
                       min_length=3)

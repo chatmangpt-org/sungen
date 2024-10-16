@@ -138,7 +138,7 @@ class GenPydanticInstance(dspy.Module):
         return self.forward(prompt=prompt)
 
 
-def gen_instance(model, prompt, verbose):
+def gen_instance(model, prompt, verbose=False):
     model_module = GenPydanticInstance(model, verbose)
     return model_module(prompt)
 

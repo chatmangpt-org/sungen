@@ -1,1 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="0" time="1.226" timestamp="2024-10-15T16:33:00.478529-07:00" hostname="Seans-MBP.attlocal.net" /></testsuites>
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="10.309" timestamp="2024-10-15T18:51:20.616069-07:00" hostname="Seans-MBP.attlocal.net"><testcase classname="tests.cmds.test_plugin_cmd" name="test_create_plugin_command" time="0.023"><failure message="AssertionError: Command failed with output: &#10;assert 1 == 0&#10; +  where 1 = &lt;Result TypeError('ToFromDSLMixin.to_yaml() takes 1 positional argument but 2 were given')&gt;.exit_code">temp_directory = PosixPath('/private/var/folders/s6/jqyw48zs39z38b_3f6f_x2sc0000gn/T/pytest-of-sac/pytest-2/test_create_plugin_command0'), plugin_name = 'sample_plugin'
+plugin_description = 'This is a sample plugin for testing purposes.', author_name = 'Test Author', version = '1.0.0'
+
+    def test_create_plugin_command(temp_directory, plugin_name, plugin_description, author_name, version):
+        """Test the create_plugin command to ensure it generates the plugin files correctly."""
+        # Prepare the CLI command arguments
+        result = runner.invoke(
+            app,
+            [
+                "create",
+                "--plugin-name",
+                plugin_name,
+                "--description",
+                plugin_description,
+                "--author",
+                author_name,
+                "--version",
+                version,
+                "--license",  # Added license
+                "MIT",        # Default license
+                "--min-sungen-version",  # Added min_sungen_version
+                "1.0.0",      # Default min_sungen_version
+                "--max-sungen-version",  # Added max_sungen_version
+                "2.0.0",      # Default max_sungen_version
+                "--base-dir",
+                str(temp_directory)
+            ],
+        )
+    
+        # Print the output for debugging
+        print(result.output)
+    
+        # Check that the command completed successfully
+&gt;       assert result.exit_code == 0, f"Command failed with output: {result.output}"
+E       AssertionError: Command failed with output: 
+E       assert 1 == 0
+E        +  where 1 = &lt;Result TypeError('ToFromDSLMixin.to_yaml() takes 1 positional argument but 2 were given')&gt;.exit_code
+
+tests/cmds/test_plugin_cmd.py:71: AssertionError</failure></testcase></testsuite></testsuites>

@@ -2,6 +2,8 @@ import inspect
 from typing import Any, Set, get_args, get_origin, List, Union, Literal, Optional
 from enum import Enum
 
+from dslmodel import DSLModel
+
 
 def collect_class_sources(cls: Any, collected_sources: Set[str]) -> None:
     """

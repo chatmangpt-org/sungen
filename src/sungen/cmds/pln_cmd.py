@@ -51,7 +51,7 @@ Putting it into Practice: A Simple Example
 
 ```python
 # pipeline_models.py
-class PipelineDSLModel(BaseModel, YAMLMixin):
+class PipelineDSLModel(DSLModel):
     lm_models: list[LanguageModelConfig] = Field(default=[], description="list of language model configurations used in the pipeline.")
     rm_models: list[RetrievalModelConfig] = Field(default=[], description="list of retrieval model configurations used in the pipeline.")
     signatures: list[SignatureDSLModel] = Field(default=[], description="list of signatures defined for use in the pipeline.")
